@@ -7,6 +7,7 @@ public class AddElementInArray {
     public static void main(String[] args) {
         int[] array = {1, 3, 4, 5, 6, 7, 9};
         int index;
+        int i;
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter element need add in Array");
@@ -20,7 +21,7 @@ public class AddElementInArray {
             }
         } while (index <= -1 || index >= array.length);
 
-        for (int i = array.length - 1; i > index; i--) {
+        for (i = array.length - 1; i > index; i--) {
             array[i] = array[i - 1];
         }
         array[index] = inputElement;

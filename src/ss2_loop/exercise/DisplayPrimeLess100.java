@@ -8,10 +8,13 @@ public class DisplayPrimeLess100 {
         System.out.println("Enter MaxPrime: ");
         int maxPrime = scan.nextInt();
         int i =2;
+        int j;
+        int check;
+
 
         while(i<=maxPrime) {
-            int j = 1;
-            int check = 0;
+            j = 1;
+            check = 0;
             while (j <= i) {
                 if (i % j == 0) {
                     check++;

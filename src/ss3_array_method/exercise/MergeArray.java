@@ -11,6 +11,7 @@ public class MergeArray {
         Scanner scan = new Scanner(System.in);
         int i = 0;
         int j = 0;
+        int k;
         int c = array1.length + array2.length;
 
         System.out.println("Input Array1");
@@ -31,7 +32,7 @@ public class MergeArray {
             array3[i] = array1[i];
         }
 
-        for (int k = array1.length; k < c; k++) {
+        for (k = array1.length; k < c; k++) {
             array3[k] = array2[k - 10];
         }
 

@@ -12,8 +12,9 @@ public class DeleteElement {
         int elementDel = scan.nextInt();
 
         int index = 0;
+        int i, j;
 
-        for (int i = 0; i < array.length; i++) {
+        for (i = 0; i < array.length; i++) {
             if (array[i] == elementDel) {
                 index = i;
             }
@@ -21,9 +22,9 @@ public class DeleteElement {
 
         System.out.println("Element need delete in position: " + index);
 
-        for (int i = 0; i < array.length; i++) {
+        for (i = 0; i < array.length; i++) {
             if (array[i] == elementDel) {
-                for (int j = i; j < array.length-1; j++) {
+                for (j = i; j < array.length-1; j++) {
                     array[j] = array[j + 1];
                 }
                 array[array.length - 1] = 0;
