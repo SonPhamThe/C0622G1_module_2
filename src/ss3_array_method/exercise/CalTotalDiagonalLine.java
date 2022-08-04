@@ -12,9 +12,9 @@ public class CalTotalDiagonalLine {
 
         do {
             System.out.println("Enter line of Array");
-            line = scan.nextInt();
+            line = Integer.parseInt(scan.nextLine());
             System.out.println("Enter pillar of Array");
-            pillar = scan.nextInt();
+            pillar = Integer.parseInt(scan.nextLine());
             if (line != pillar)
                 System.out.println("Enter again line and pillar");
         } while (line != pillar);
@@ -24,7 +24,7 @@ public class CalTotalDiagonalLine {
         for (i = 0; i < line; i++) {
             for (j = 0; j < pillar; j++) {
                 System.out.print("Enter element in line: " + i + " and pillar: " + j);
-                array[i][j] = scan.nextInt();
+                array[i][j] = Integer.parseInt(scan.nextLine());
             }
         }
 

@@ -9,7 +9,7 @@ public class DeleteElement {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Enter element is need in Array: ");
-        int elementDel = scan.nextInt();
+        int elementDel = Integer.parseInt(scan.nextLine());
 
         int index = 0;
         int i, j;

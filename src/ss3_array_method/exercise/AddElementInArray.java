@@ -11,7 +11,7 @@ public class AddElementInArray {
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter element need add in Array");
-        int inputElement = scan.nextInt();
+        int inputElement = Integer.parseInt(scan.nextLine());
 
         do {
             System.out.println("Enter index need add in Array");

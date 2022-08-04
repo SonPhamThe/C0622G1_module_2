@@ -35,7 +35,6 @@ public class FindMaxElement {
             }
         }
 
-        System.out.println(array[0][0]);
         System.out.println("Element is smallest in Array: " + max);
     }
 }

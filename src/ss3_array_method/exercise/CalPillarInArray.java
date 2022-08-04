@@ -10,23 +10,23 @@ public class CalPillarInArray {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Enter line of Array");
-        line = scan.nextInt();
+        line = Integer.parseInt(scan.nextLine());
         System.out.println("Enter pillar of Array");
-        pillar = scan.nextInt();
+        pillar = Integer.parseInt(scan.nextLine());
 
         int[][] array = new int[line][pillar];
 
         for (i = 0; i < line; i++) {
             for (j = 0; j < pillar; j++) {
                 System.out.print("Enter element in line: " + i + " and pillar: " + j);
-                array[i][j] = scan.nextInt();
+                array[i][j] = Integer.parseInt(scan.nextLine());
             }
         }
 
         System.out.println("Array in add: " + Arrays.deepToString(array));
 
         System.out.println("Enter pillar, you want cal total this pillar");
-        int inputPillar = scan.nextInt();
+        int inputPillar = Integer.parseInt(scan.nextLine());
         int total = 0;
 
         for (i = 0; i < line; i++) {
