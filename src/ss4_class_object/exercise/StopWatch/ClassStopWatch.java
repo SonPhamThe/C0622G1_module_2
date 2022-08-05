@@ -20,7 +20,7 @@ public class ClassStopWatch {
         return this.startTime;
     }
 
-    long setEndTime() {
+    long getEndTime() {
         return this.endTime;
     }
 
