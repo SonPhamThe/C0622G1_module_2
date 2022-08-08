@@ -9,6 +9,6 @@ public class ConvertMoney {
         double USD = scanner.nextDouble();
         int rate = 23000;
         double VND = USD * rate;
-        System.out.println("Gía tiền VND bạn muốn đổi: " + VND);
+        System.out.println("The price you want to change VND: " + VND);
     }
 }

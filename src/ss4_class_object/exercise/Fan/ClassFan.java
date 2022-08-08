@@ -1,17 +1,14 @@
 package ss4_class_object.exercise.Fan;
 
 public class ClassFan {
-    private int speed;
-    private double radius;
-    private String color;
-    private boolean on;
+    final int SLOW = 1;
+    final int MEDIUM = 2;
+    final int FAST = 3;
+    private int speed = SLOW;
+    private double radius = 5;
+    private String color = "blue";
+    private boolean on = false;
 
-    public ClassFan() {
-        this.speed = 1;
-        this.color = "blue";
-        this.on = false;
-        this.radius = 5;
-    }
 
     public ClassFan(int speed, double radius, String color, boolean on) {
         this.speed = speed;
@@ -20,12 +17,16 @@ public class ClassFan {
         this.on = on;
     }
 
-    public int getSpeed() {
-        return this.speed;
+    public ClassFan() {
+
     }
 
     public void setSpeed(int speed) {
-        this.speed = speed;
+        if (speed != 1 && speed != 2 && speed != 3) {
+            System.out.println("Can't set " + speed + "!\n" + "Speed must be 1, 2 or 3");
+        } else {
+            this.speed = speed;
+        }
     }
 
     public double getRadius() {
@@ -52,20 +53,32 @@ public class ClassFan {
         this.color = color;
     }
 
+    public String getSpeed() {
+        if (on) {
+            switch (this.speed) {
+                case 1:
+                    return " SLOW";
+                case 2:
+                    return " MEDIUM";
+                case 3:
+                    return " FAST";
+            }
+        }
+            return "Fan is off";
+    }
+
+
     @Override
     public String toString() {
-        String speedString;
-        if (this.speed == 1) {
-            speedString = "Slow";
-        } else if (this.speed == 2) {
-            speedString = "Medium";
+        if(on) {
+            return "Fan is on " +
+                    "speed = " + getSpeed() +
+                    ", radius = " + this.radius +
+                    ", color = '" + this.color + '\'' ;
         } else {
-            speedString = "fast";
-        }
-        if (this.on) {
-            return String.format("Fan is on has speed: " + this.speed + " color: " + this.color + " radius: " + radius);
-        } else {
-            return String.format("Fan is off has color: " + this.color + " radius: " + radius);
+            return "Fan is off " +
+                    ", radius =" + this.radius +
+                    ", color ='" + this.color + '\'' ;
         }
     }
 }
