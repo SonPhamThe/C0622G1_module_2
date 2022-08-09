@@ -1,5 +1,6 @@
 package ss7_abstractclass_interface.exercise.interface_colorable.model.shape;
 
+
 import ss7_abstractclass_interface.exercise.interface_colorable.model.interface_colorable.Color;
 
 public class Square extends Shape implements Color {
