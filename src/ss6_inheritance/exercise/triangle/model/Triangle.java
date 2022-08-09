@@ -70,4 +70,8 @@ public class Triangle extends Shape {
                 ", side3 = " + side3 +
                 ", p = " + p + super.toString();
     }
+
+    @Override
+    public void resize(double percent) {
+    }
 }

@@ -1,16 +1,17 @@
-package ss6_inheritance.practice.geometric.model;
+package ss7_abstractclass_interface.exercise.interface_resizeable.model.shape1;
 
 public class Circle extends Shape {
     private double radius = 1.0;
 
-    public Circle() {}
+    public Circle() {
+    }
 
     public Circle(double radius) {
         this.radius = radius;
     }
 
     public Circle(double radius, String color, boolean filled) {
-        super(color,filled);
+        super(color, filled);
         this.radius = radius;
     }
 
@@ -23,20 +24,21 @@ public class Circle extends Shape {
     }
 
     public double getArea() {
-        return radius*radius*Math.PI;
+        return radius * radius * Math.PI;
     }
 
     public double getPerimeter() {
-        return 2*radius*Math.PI;
+        return 2 * radius * Math.PI;
     }
 
     @Override
     public String toString() {
-        return "A circle has a radius = " + getRadius()+ " which is a subclass of "+super.toString();
+        return "A circle has a radius = " + getRadius() + " which is a subclass of " + super.toString();
     }
 
     @Override
     public void resize(double percent) {
-
+        this.radius += this.radius*percent/100;
     }
 }
+

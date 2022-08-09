@@ -1,13 +1,13 @@
-package ss6_inheritance.practice.geometric.model;
+package ss7_abstractclass_interface.exercise.interface_resizeable.model.shape1;
 
-public abstract class Shape {
+import ss7_abstractclass_interface.exercise.interface_resizeable.model.resizeable.Resizeable;
+
+public class Shape implements Resizeable {
     private String color = "green";
     private boolean filled = true;
 
     public Shape() {
     }
-
-    ;
 
     public Shape(String color, boolean filled) {
         this.color = color;
@@ -41,5 +41,7 @@ public abstract class Shape {
                 ", and " + (isFilled() ? "filled" : "not filled");
     }
 
-    public abstract void resize(double percent);
+    @Override
+    public void resize(double percent) {
+    }
 }

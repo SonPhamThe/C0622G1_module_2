@@ -1,4 +1,4 @@
-package ss6_inheritance.practice.geometric.model;
+package ss7_abstractclass_interface.exercise.interface_colorable.model.shape;
 
 public abstract class Shape {
     private String color = "green";
@@ -6,8 +6,6 @@ public abstract class Shape {
 
     public Shape() {
     }
-
-    ;
 
     public Shape(String color, boolean filled) {
         this.color = color;
@@ -40,6 +38,4 @@ public abstract class Shape {
                 "color = '" + getColor() + '\'' +
                 ", and " + (isFilled() ? "filled" : "not filled");
     }
-
-    public abstract void resize(double percent);
 }

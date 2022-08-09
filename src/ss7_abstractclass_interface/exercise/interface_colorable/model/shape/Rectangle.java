@@ -1,18 +1,12 @@
-package ss6_inheritance.practice.geometric.model;
+package ss7_abstractclass_interface.exercise.interface_colorable.model.shape;
 
 public class Rectangle extends Shape {
-    private double width = 1.0;
-    private double length = 1.0;
+    public double width = 1.0;
+    public double length = 1.0;
 
     public Rectangle(double width, double length) {
         this.length = length;
         this.width = width;
-    }
-
-    public Rectangle(double width, double length, String color, boolean filled) {
-        super(color, filled);
-        this.width = width;
-        this.length = length;
     }
 
     public Rectangle() {
@@ -48,9 +42,7 @@ public class Rectangle extends Shape {
                 "width = " + getWidth() +
                 ",and a length = " + getLength() +
                 " which is a subclass of " + super.toString();
+
     }
 
-    @Override
-    public void resize(double percent) {
-    }
 }
