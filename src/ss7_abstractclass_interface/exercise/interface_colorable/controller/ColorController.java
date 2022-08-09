@@ -1,10 +1,11 @@
 package ss7_abstractclass_interface.exercise.interface_colorable.controller;
 
+
 import ss7_abstractclass_interface.exercise.interface_colorable.model.interface_colorable.Color;
-import ss7_abstractclass_interface.exercise.interface_resizeable.model.shape1.Circle;
-import ss7_abstractclass_interface.exercise.interface_resizeable.model.shape1.Rectangle;
-import ss7_abstractclass_interface.exercise.interface_resizeable.model.shape1.Shape;
-import ss7_abstractclass_interface.exercise.interface_resizeable.model.shape1.Square;
+import ss7_abstractclass_interface.exercise.interface_colorable.model.shape.Circle;
+import ss7_abstractclass_interface.exercise.interface_colorable.model.shape.Rectangle;
+import ss7_abstractclass_interface.exercise.interface_colorable.model.shape.Shape;
+import ss7_abstractclass_interface.exercise.interface_colorable.model.shape.Square;
 
 public class ColorController {
     public static void main(String[] args) {
@@ -15,9 +16,9 @@ public class ColorController {
 
         for (Shape shapes : shape) {
             System.out.println(shapes);
-            if (shapes instanceof Color) {
-                ((Color) shapes).howToColor();
-                System.out.println();
+            if (shapes instanceof Square) {
+                Color color = (Square) shapes;
+                System.out.println(color.howToColor());
             }
             System.out.println();
         }

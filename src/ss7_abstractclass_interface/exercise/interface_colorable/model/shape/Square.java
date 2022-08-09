@@ -40,7 +40,7 @@ public class Square extends Shape implements Color {
     }
 
     @Override
-    public void howToColor() {
-        System.out.println(" Color all four sides..");
+    public String howToColor() {
+        return " Color all four sides..";
     }
 }

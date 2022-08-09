@@ -1,6 +1,6 @@
 package ss7_abstractclass_interface.exercise.interface_colorable.model.shape;
 
-public abstract class Shape {
+public class Shape {
     private String color = "green";
     private boolean filled = true;
 
