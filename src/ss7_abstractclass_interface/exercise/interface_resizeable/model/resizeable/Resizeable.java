@@ -2,6 +2,4 @@ package ss7_abstractclass_interface.exercise.interface_resizeable.model.resizeab
 
 public interface Resizeable {
     void resize(double percent);
-
-
 }
