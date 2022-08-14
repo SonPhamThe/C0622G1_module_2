@@ -1,6 +1,5 @@
 package demo_haitt.demo_exercise1.service.impl;
 
-import demo_haitt.demo_exercise1.model.Student;
 import demo_haitt.demo_exercise1.model.Teacher;
 import demo_haitt.demo_exercise1.service.ITeacher;
 
@@ -12,7 +11,7 @@ public class TeacherService implements ITeacher {
 
     private static final Scanner scan = new Scanner(System.in);
 
-    private static List<Teacher> teachers = new ArrayList<>();
+    private static final List<Teacher> teachers = new ArrayList<>();
 
     @Override
     public void displayTeacher() {
@@ -48,9 +47,9 @@ public class TeacherService implements ITeacher {
     public Teacher findTeacher() {
         System.out.println("Enter id student you want to find");
         int id = Integer.parseInt(scan.nextLine());
-        for (int i = 0; i < teachers.size(); i++) {
-            if (teachers.get(i).getId() == id) {
-                return teachers.get(i);
+        for (Teacher teacher : teachers) {
+            if (teacher.getId() == id) {
+                return teacher;
             }
         }
         return null;

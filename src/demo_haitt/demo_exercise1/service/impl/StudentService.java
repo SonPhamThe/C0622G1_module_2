@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class StudentService implements IStudent {
     private static final Scanner scan = new Scanner(System.in);
-    private static List<Student> students = new ArrayList<>();
+    private static final List<Student> students = new ArrayList<>();
 
     @Override
     public void displayStudent() {
@@ -44,9 +44,9 @@ public class StudentService implements IStudent {
     public Student findStudent() {
         System.out.println("Enter id student you want to find");
         int id = Integer.parseInt(scan.nextLine());
-        for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).getId() == id) {
-                return students.get(i);
+        for (Student student : students) {
+            if (student.getId() == id) {
+                return student;
             }
         }
         return null;

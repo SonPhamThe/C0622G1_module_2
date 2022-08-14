@@ -1,6 +1,5 @@
 package demo_haitt.demo_exercise1.controller;
 
-import demo_haitt.demo_exercise1.model.Person;
 import demo_haitt.demo_exercise1.service.IStudent;
 import demo_haitt.demo_exercise1.service.ITeacher;
 import demo_haitt.demo_exercise1.service.impl.StudentService;
@@ -13,7 +12,7 @@ public class PersonController {
     private static final IStudent student = new StudentService();
     private static final ITeacher teacher = new TeacherService();
 
-    public Person menuUser() {
+    public void menuUser() {
         while (true) {
             System.out.println("Please choose from the options");
             System.out.println("1. Information of Student");
