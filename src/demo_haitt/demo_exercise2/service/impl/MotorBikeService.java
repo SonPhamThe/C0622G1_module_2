@@ -1,6 +1,7 @@
 package demo_haitt.demo_exercise2.service.impl;
 
 
+import demo_haitt.demo_exercise2.model.Car;
 import demo_haitt.demo_exercise2.model.MotorBike;
 import demo_haitt.demo_exercise2.service.IMotorBike;
 
@@ -46,11 +47,68 @@ public class MotorBikeService implements IMotorBike {
         }
     }
 
+    @Override
+    public void editTheMotor() {
+        MotorBike motorEdit = this.findMotorBike();
+        if (motorEdit == null) {
+            System.out.println("The truck you are looking for is not available");
+        } else {
+            while (true) {
+                int positionEdit = motors.indexOf(motorEdit);
+                System.out.println("information you want to edit" +
+                        "\n 1. LicensePlates of the motorbike" +
+                        "\n 2. Manufacturer of the motorbike" +
+                        "\n 3. Year of manufacturer of the motorbike" +
+                        "\n 4. Owner of the motorbike" +
+                        "\n 5. Wattage of the motorbike" +
+                        "\n 6. Exit");
+                int choiceEdit = Integer.parseInt(scan.nextLine());
+
+                switch (choiceEdit) {
+                    case 1:
+                        System.out.println("Enter licensePlates you want to edit");
+                        String licensePlates = scan.nextLine();
+                        motors.get(positionEdit).setLicensePlates(licensePlates);
+                        System.out.println("Success Edit");
+                        break;
+                    case 2:
+                        System.out.println("Enter manufacturer you want to edit");
+                        String manufacturer = scan.nextLine();
+                        motors.get(positionEdit).setManufacturer(manufacturer);
+                        System.out.println("Success Edit");
+                        break;
+                    case 3:
+                        System.out.println("Enter year of manufacturer you want to edit");
+                        int yearOfManufacturer = Integer.parseInt(scan.nextLine());
+                        motors.get(positionEdit).setYearOfManufacturer(yearOfManufacturer);
+                        System.out.println("Success Edit");
+                        break;
+                    case 4:
+                        System.out.println("Enter owner you want to edit");
+                        String owner = scan.nextLine();
+                        motors.get(positionEdit).setOwner(owner);
+                        System.out.println("Success Edit");
+                        break;
+                    case 5:
+                        System.out.println("Enter wattage you want to edit");
+                        double wattage = Double.parseDouble(scan.nextLine());
+                        motors.get(positionEdit).setWattage(wattage);
+                        System.out.println("Success Edit");
+                        break;
+                    case 6:
+                        System.exit(0);
+                    default:
+                        System.out.println("Your selection is not suitable, selections from 1 to 6");
+                }
+            }
+        }
+    }
+
     public MotorBike findMotorBike() {
         System.out.println("Enter licensePlates motorbike you want to find");
         String licensePlates = scan.nextLine();
         for (int i = 0; i < motors.size(); i++) {
-            if (motors.get(i).getLicensePlates() == licensePlates) {
+            if (motors.get(i).getLicensePlates().equals(licensePlates)) {
                 return motors.get(i);
             }
         }

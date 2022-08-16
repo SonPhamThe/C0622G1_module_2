@@ -6,4 +6,6 @@ public interface ICar {
     void displayListCar();
 
     void deleteCar();
+
+    void editTheCar();
 }

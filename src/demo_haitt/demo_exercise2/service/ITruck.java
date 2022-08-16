@@ -6,5 +6,5 @@ public interface ITruck {
     void displayListTruck();
 
     void deleteTruck();
-
+    void editTheTruck();
 }

@@ -26,7 +26,8 @@ public class VehicleController {
                     "\n 2. Display vehicles" +
                     "\n 3. Delete vehicles" +
                     "\n 4. Search by licensePlates" +
-                    "\n 5. Exit\n");
+                    "\n 5. Edit information vehicles" +
+                    "\n 6. Exit\n");
             int choice = Integer.parseInt(scan.nextLine());
             switch (choice) {
                 case 1:
@@ -99,7 +100,22 @@ public class VehicleController {
                     vehicle.searchVehicle();
                     break;
                 case 5:
-                    System.exit(0);
+                    System.out.println("5.1 Edit the truck");
+                    System.out.println("5.2 Edit the car");
+                    System.out.println("5.3 Edit the motorbike");
+                    System.out.println("5.4 Exit");
+                    int choiceFive = Integer.parseInt(scan.nextLine());
+                    switch (choiceFive) {
+                        case 1:
+                            truck.editTheTruck();
+                        case 2:
+                            car.editTheCar();
+                        case 3:
+                            motor.editTheMotor();
+                        case 4:
+                            System.exit(0);
+                    }
+                    break;
             }
         }
     }

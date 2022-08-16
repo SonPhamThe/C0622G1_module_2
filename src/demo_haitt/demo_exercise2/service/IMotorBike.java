@@ -6,4 +6,6 @@ public interface IMotorBike {
     void diplayListMotorBike();
 
     void deleteMotorBike();
+
+    void editTheMotor();
 }

@@ -1,6 +1,7 @@
 package demo_haitt.demo_exercise2.service.impl;
 
 import demo_haitt.demo_exercise2.model.Car;
+import demo_haitt.demo_exercise2.model.Truck;
 import demo_haitt.demo_exercise2.service.ICar;
 
 import java.util.ArrayList;
@@ -46,11 +47,74 @@ public class CarService implements ICar {
         }
     }
 
+    @Override
+    public void editTheCar() {
+        Car carEdit = this.findCar();
+        if (carEdit == null) {
+            System.out.println("The truck you are looking for is not available");
+        } else {
+            while (true) {
+                int positionEdit = cars.indexOf(carEdit);
+                System.out.println("information you want to edit" +
+                        "\n 1. LicensePlates of the car" +
+                        "\n 2. Manufacturer of the car" +
+                        "\n 3. Year of manufacturer of the car" +
+                        "\n 4. Owner of the car" +
+                        "\n 5. Vehicle Type of the car" +
+                        "\n 6. Number seat of the car" +
+                        "\n 7. Exit");
+                int choiceEdit = Integer.parseInt(scan.nextLine());
+
+                switch (choiceEdit) {
+                    case 1:
+                        System.out.println("Enter licensePlates you want to edit");
+                        String licensePlates = scan.nextLine();
+                        cars.get(positionEdit).setLicensePlates(licensePlates);
+                        System.out.println("Success Edit");
+                        break;
+                    case 2:
+                        System.out.println("Enter manufacturer you want to edit");
+                        String manufacturer = scan.nextLine();
+                        cars.get(positionEdit).setManufacturer(manufacturer);
+                        System.out.println("Success Edit");
+                        break;
+                    case 3:
+                        System.out.println("Enter year of manufacturer you want to edit");
+                        int yearOfManufacturer = Integer.parseInt(scan.nextLine());
+                        cars.get(positionEdit).setYearOfManufacturer(yearOfManufacturer);
+                        System.out.println("Success Edit");
+                    case 4:
+                        System.out.println("Enter owner you want to edit");
+                        String owner = scan.nextLine();
+                        cars.get(positionEdit).setOwner(owner);
+                        System.out.println("Success Edit");
+                        break;
+                    case 5:
+                        System.out.println("Enter vehicle type you want to edit");
+                        String vehicleType = scan.nextLine();
+                        cars.get(positionEdit).setVehicleType(vehicleType);
+                        System.out.println("Success Edit");
+                        break;
+                    case 6:
+                        System.out.println("Enter number seat you want to edit");
+                        int numberSeat = Integer.parseInt(scan.nextLine());
+                        cars.get(positionEdit).setNumberSeat(numberSeat);
+                        System.out.println("Success Edit");
+                        break;
+                    case 7:
+                        System.exit(0);
+                    default:
+                        System.out.println("Your selection is not suitable, selections from 1 to 7");
+                }
+            }
+        }
+    }
+
     public Car findCar() {
         System.out.println("Enter licensePlates car you want to find");
         String licensePlates = scan.nextLine();
         for (int i = 0; i < cars.size(); i++) {
-            if (cars.get(i).getLicensePlates() == licensePlates) {
+            if (cars.get(i).getLicensePlates().equals(licensePlates)) {
                 return cars.get(i);
             }
         }
