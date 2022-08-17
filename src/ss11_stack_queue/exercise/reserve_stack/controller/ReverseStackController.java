@@ -12,27 +12,17 @@ public class ReverseStackController {
         int size;
 
         do {
-            System.out.println("Enter size of array");
+            System.out.println("Enter size of array again");
             size = Integer.parseInt(scan.nextLine());
             if (size < 0) {
                 System.out.println("Size invalid, size must be >0");
             }
         } while (size < 0);
 
+
         int[] array = new int[size];
 
-        for (int i = 0; i < size; i++) {
-            System.out.println("Enter element of array");
-            array[i] = Integer.parseInt(scan.nextLine());
-        }
-
-        System.out.println("Array before reverse: ");
-        System.out.println(Arrays.toString(array));
-
         reverseArray(array);
-
-        System.out.println("Array after reverse: ");
-        System.out.println(Arrays.toString(array));
 
         System.out.println("Enter your string want to reverse");
         String string = scan.nextLine();

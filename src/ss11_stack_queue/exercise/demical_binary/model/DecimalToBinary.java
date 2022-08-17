@@ -4,9 +4,18 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class DecimalToBinary {
-   private static final Scanner scan = new Scanner(System.in);
-   private static final Stack<Integer> stack = new Stack<>();
+    private static final Scanner scan = new Scanner(System.in);
+    private static final Stack<Integer> stack = new Stack<>();
+
     public static void ChangeDecimalToBinary(int number) {
+        while (number < 0) {
+            if (number < 0) {
+                System.out.println("Number your input Invalid, please number > 0");
+            }
+            System.out.println("Enter a decimal number");
+            number = Integer.parseInt(scan.nextLine());
+        }
+
         while (number != 0) {
             stack.push(number % 2);
             number /= 2;

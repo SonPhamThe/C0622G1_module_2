@@ -1,15 +1,23 @@
 package demo_haitt.demo_exercise1.service.impl;
 
+import demo_haitt.demo_exercise1.model.Person;
 import demo_haitt.demo_exercise1.model.Student;
 import demo_haitt.demo_exercise1.service.IStudent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class StudentService implements IStudent {
     private static final Scanner scan = new Scanner(System.in);
-    private static final List<Student> students = new ArrayList<>();
+    static final List<Student> students = new ArrayList<>();
+
+    static {
+        students.add(new Student(5, "son", "12/04/1999", "male", "ab", 6));
+        students.add(new Student(6, "vinh", "15/05/1999", "male", "ac", 9));
+        students.add(new Student(7, "peter", "13/06/1999", "male", "ad", 8));
+    }
 
     @Override
     public void displayStudent() {
@@ -27,8 +35,8 @@ public class StudentService implements IStudent {
 
     @Override
     public void deleteStudent() {
-     Student student = this.findStudent();
-        if(student==null) {
+        Student student = this.findStudent();
+        if (student == null) {
             System.out.println("Not found student valid");
         } else {
             System.out.println("Are you sure want to delete");
@@ -38,6 +46,29 @@ public class StudentService implements IStudent {
                 students.remove(student);
                 System.out.println("Successful is delete");
             }
+        }
+    }
+
+    @Override
+    public void sortName() {
+        System.out.println("Select sort by name from: " +
+                "\n 1. Big to small" +
+                "\n 2. Small to big" +
+                "\n 3. Exit");
+        int choose = Integer.parseInt(scan.nextLine());
+        switch (choose) {
+            case 1:
+                students.sort((a, b) -> (int) (b.getScore() - a.getScore()));
+                System.out.println("Success sort");
+                break;
+            case 2:
+                students.sort((a, b) -> (int) (a.getScore() - b.getScore()));
+                System.out.println("Success sort");
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("Your selection is not suitable, selections from 1 to 3");
         }
     }
 
@@ -53,8 +84,20 @@ public class StudentService implements IStudent {
     }
 
     public Student infoStudent() {
-        System.out.println("Enter id of Student");
-        int id = Integer.parseInt(scan.nextLine());
+        int id;
+        int count;
+        do {
+            count = 0;
+            System.out.println("Enter id of Student");
+            id = Integer.parseInt(scan.nextLine());
+            for (Student student : students) {
+                if (student.getId() == id) {
+                    System.out.println("The id has been matched");
+                    count++;
+                }
+            }
+        } while (count != 0);
+
         System.out.println("Enter name of Student");
         String name = scan.nextLine();
         System.out.println("Enter day of birth of Student");

@@ -24,7 +24,7 @@ public class VehicleService implements IVehicle {
         if (licensePlates.isEmpty()) {
             System.out.println("Can't find a suitable vehicle");
         } else {
-            System.out.println(foundVehicles.toString());
+            System.out.println(foundVehicles);
         }
 
     }

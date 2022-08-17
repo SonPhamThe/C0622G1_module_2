@@ -10,12 +10,9 @@ import java.util.Stack;
 public class PalindromeQueueController {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Queue<String> queue = new LinkedList<>();
-        Stack<String> stack = new Stack<>();
 
         System.out.println("Enter your String to check");
         String string = scan.nextLine();
-        string = string.replaceAll("\\s", "");
 
         PalindromeQueue.checkPalindrome(string);
     }

@@ -1,7 +1,7 @@
 package demo_haitt.demo_exercise2.service.impl;
 
 import demo_haitt.demo_exercise2.model.Car;
-import demo_haitt.demo_exercise2.model.Truck;
+
 import demo_haitt.demo_exercise2.service.ICar;
 
 import java.util.ArrayList;

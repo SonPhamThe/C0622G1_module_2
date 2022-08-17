@@ -9,15 +9,8 @@ public class DecimalToBinaryController {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         Stack<Integer> stack = new Stack<>();
-        int number;
-
-        do {
-            System.out.println("Enter a decimal number");
-            number = Integer.parseInt(scan.nextLine());
-            if (number < 0) {
-                System.out.println("Number your input Invalid, please number > 0");
-            }
-        } while (number < 0);
+        System.out.println("Enter a decimal number");
+        int number = Integer.parseInt(scan.nextLine());
 
         DecimalToBinary.ChangeDecimalToBinary(number);
     }

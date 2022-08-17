@@ -6,4 +6,6 @@ public interface ITeacher {
     void deleteTeacher();
 
     void addTeacher();
+
+    void sortID();
 }

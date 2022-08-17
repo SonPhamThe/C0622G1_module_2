@@ -1,5 +1,6 @@
 package demo_haitt.demo_exercise1.service.impl;
 
+import demo_haitt.demo_exercise1.model.Student;
 import demo_haitt.demo_exercise1.model.Teacher;
 import demo_haitt.demo_exercise1.service.ITeacher;
 
@@ -11,7 +12,13 @@ public class TeacherService implements ITeacher {
 
     private static final Scanner scan = new Scanner(System.in);
 
-    private static final List<Teacher> teachers = new ArrayList<>();
+    static final List<Teacher> teachers = new ArrayList<>();
+
+    static {
+        teachers.add(new Teacher(6,"haiTT","23/4/1998","male","tutor"));
+        teachers.add(new Teacher(4,"quangNN","25/5/1998","male","tutor"));
+        teachers.add(new Teacher(8,"chanhTV","27/6/1990","male","tutor"));
+    }
 
     @Override
     public void displayTeacher() {
@@ -44,6 +51,29 @@ public class TeacherService implements ITeacher {
         System.out.println("Successful add");
     }
 
+    @Override
+    public void sortID() {
+        System.out.println("Select sort by id from: " +
+                "\n 1. Big to small" +
+                "\n 2. Small to big" +
+                "\n 3. Exit");
+        int choose = Integer.parseInt(scan.nextLine());
+        switch (choose) {
+            case 1:
+                teachers.sort((a, b) -> (int) (b.getId() - a.getId()));
+                System.out.println("Success sort");
+                break;
+            case 2:
+                teachers.sort((a, b) -> (int) (a.getId() - b.getId()));
+                System.out.println("Success sort");
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("Your selection is not suitable, selections from 1 to 3");
+        }
+    }
+
     public Teacher findTeacher() {
         System.out.println("Enter id student you want to find");
         int id = Integer.parseInt(scan.nextLine());
@@ -56,8 +86,20 @@ public class TeacherService implements ITeacher {
     }
 
     public Teacher infoTeacher() {
-        System.out.println("Enter id of Teacher");
-        int id = Integer.parseInt(scan.nextLine());
+        int id;
+        int count;
+        do {
+            count = 0;
+            System.out.println("Enter id of Teacher");
+            id = Integer.parseInt(scan.nextLine());
+            for (Teacher teacher : teachers) {
+                if (teacher.getId() == id) {
+                    System.out.println("The id has been matched");
+                    count++;
+                }
+            }
+        } while (count != 0);
+
         System.out.println("Enter name of Teacher");
         String name = scan.nextLine();
         System.out.println("Enter day of birth of Teacher");

@@ -68,15 +68,17 @@ public class ProductService implements IProduct {
 
     @Override
     public void searchTheProduct() {
+        int count = 0;
         System.out.println("Enter name of the product to search");
         String nameOfProduct = scan.nextLine();
         for (int i = 0; i < product.size(); i++) {
             if (product.get(i).getNameProduct().equals(nameOfProduct)) {
                 System.out.println(product.get(i).toString());
+                count++;
             }
-            if (!product.get(i).getNameProduct().equals(nameOfProduct)) {
-                System.out.println("Don't search product");
-            }
+        }
+        if(count==0) {
+            System.out.println("Don't search the product");
         }
     }
 
