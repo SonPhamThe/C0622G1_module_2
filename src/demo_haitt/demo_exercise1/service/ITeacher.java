@@ -8,4 +8,6 @@ public interface ITeacher {
     void addTeacher();
 
     void sortID();
+
+    void sortName();
 }

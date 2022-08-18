@@ -7,5 +7,7 @@ public interface IStudent {
 
     void deleteStudent();
 
+    void sortScore();
+
     void sortName();
 }

@@ -50,7 +50,7 @@ public class StudentService implements IStudent {
     }
 
     @Override
-    public void sortName() {
+    public void sortScore() {
         System.out.println("Select sort by name from: " +
                 "\n 1. Big to small" +
                 "\n 2. Small to big" +
@@ -72,6 +72,29 @@ public class StudentService implements IStudent {
         }
     }
 
+    @Override
+    public void sortName() {
+        System.out.println("Welcome to the programing");
+
+        boolean needNextPass = true;
+        for (int k = 0; k < students.size() - 1 && needNextPass; k++) {
+            needNextPass = false;
+            for (int i = 0; i < students.size() - 1 - k; i++) {
+
+                if (students.get(i).getName().compareTo(students.get(i + 1).getName()) > 0) {
+                    needNextPass = true;
+                    Student temp = students.get(i + 1);
+                    students.set(i + 1, students.get(i));
+                    students.set(i, temp);
+                }
+
+            }
+        }
+
+
+        System.out.println("Success sort");
+    }
+
     public Student findStudent() {
         System.out.println("Enter id student you want to find");
         int id = Integer.parseInt(scan.nextLine());
@@ -86,6 +109,7 @@ public class StudentService implements IStudent {
     public Student infoStudent() {
         int id;
         int count;
+
         do {
             count = 0;
             System.out.println("Enter id of Student");

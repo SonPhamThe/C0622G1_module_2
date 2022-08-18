@@ -71,7 +71,8 @@ public class PersonController {
                     }
                     break;
                 case 3:
-                    System.out.println("Choice option" + "\n 1. Search for id" +
+                    System.out.println("Choice option" +
+                            "\n 1. Search for id" +
                             "\n 2. Search for name" +
                             "\n 3. Exit");
                     choice = Integer.parseInt(scan.nextLine());
@@ -92,19 +93,27 @@ public class PersonController {
                     System.out.println("Select option to sort" +
                             "\n 1. Sort the student by score" +
                             "\n 2. Sort the teacher by id" +
-                            "\n 3. Exit");
+                            "\n 3. Sort the student by name" +
+                            "\n 4. Sort the teacher by name:" +
+                            "\n 5. Exit");
                     choice = Integer.parseInt(scan.nextLine());
                     switch (choice) {
                         case 1:
-                            student.sortName();
+                            student.sortScore();
                             break;
                         case 2:
                             teacher.sortID();
                             break;
                         case 3:
+                            student.sortName();
+                            break;
+                        case 4:
+                            teacher.sortName();
+                            break;
+                        case 5:
                             System.exit(0);
                         default:
-                            System.out.println("Your selection is not suitable, selections from 1 to 3");
+                            System.out.println("Your selection is not suitable, selections from 1 to 5");
                     }
                     break;
                 case 5:

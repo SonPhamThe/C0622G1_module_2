@@ -15,9 +15,9 @@ public class TeacherService implements ITeacher {
     static final List<Teacher> teachers = new ArrayList<>();
 
     static {
-        teachers.add(new Teacher(6,"haiTT","23/4/1998","male","tutor"));
-        teachers.add(new Teacher(4,"quangNN","25/5/1998","male","tutor"));
-        teachers.add(new Teacher(8,"chanhTV","27/6/1990","male","tutor"));
+        teachers.add(new Teacher(6, "bongNN", "23/4/1998", "male", "tutor"));
+        teachers.add(new Teacher(4, "BaiTT", "25/5/1998", "male", "tutor"));
+        teachers.add(new Teacher(8, "chanhTV", "27/6/1990", "male", "tutor"));
     }
 
     @Override
@@ -72,6 +72,27 @@ public class TeacherService implements ITeacher {
             default:
                 System.out.println("Your selection is not suitable, selections from 1 to 3");
         }
+    }
+
+    @Override
+    public void sortName() {
+        System.out.println("Welcome to the programing");
+
+        boolean needNextPass = true;
+
+        for (int k = 0; k < teachers.size() - 1 && needNextPass; k++) {
+            needNextPass = false;
+            for (int i = 0; i < teachers.size() - 1 - k; i++) {
+                if (teachers.get(i).getName().compareTo(teachers.get(i + 1).getName()) > 0) {
+                    needNextPass = true;
+                    Teacher temp = teachers.get(i + 1);
+                    teachers.set(i + 1, teachers.get(i));
+                    teachers.set(i, temp);
+                }
+            }
+        }
+
+        System.out.println("Success sort");
     }
 
     public Teacher findTeacher() {

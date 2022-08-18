@@ -38,8 +38,6 @@ public class BinarySearchAlgorithm {
     }
 
     public static int binarySearch(int[] arr, int left, int right, int value) {
-        //int middle = (left + right) / 2;
-
         if (right >= left) {
             int middle = (left + right) / 2;
 
