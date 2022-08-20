@@ -141,13 +141,12 @@ public class StudentService implements IStudent {
         do {
             System.out.println("Enter name of Student");
             try {
-                System.out.print("Mời bạn nhập tên: ");
                 name = (scan.nextLine());
                 String str;
                 for (int i = 0; i < name.length(); i++) {
                     str = "";
                     if ((str + name.charAt(i)).matches("\\d+")) {
-                        throw new InfoException("Tên bạn nhập ko hợp lệ");
+                        throw new InfoException("Input invalid");
                     }
                 }
 
@@ -160,13 +159,13 @@ public class StudentService implements IStudent {
         String dayOfBirth;
         do {
             try {
-                System.out.print("Mời bạn nhập ngày sinh: ");
+                System.out.print("Enter day of birth: ");
                 dayOfBirth = scan.nextLine();
                 if (!dayOfBirth.matches("\\d+\\d+\\W+\\d+\\d+\\W+\\d+\\d+\\d+\\d")) {
-                    throw new InfoException("Dữ liệu không đúng định dạng");
+                    throw new InfoException("Invalid input data");
                 }
-                if (Integer.parseInt(dayOfBirth.substring(6)) > 2016) {
-                    throw new InfoException("Dữ liệu không đúng định dạng");
+                if (Integer.parseInt(dayOfBirth.substring(6)) > 2015) {
+                    throw new InfoException("Invalid input data");
                 }
                 break;
             } catch (InfoException e) {
@@ -194,8 +193,8 @@ public class StudentService implements IStudent {
             try {
                 System.out.print("Enter name of class: ");
                 nameClass = scan.nextLine();
-                if (!nameClass.matches("\\D+\\d+\\d+\\d+\\d+\\D+\\d")) {
-                    throw new InfoException("Tên lớp không hợp lệ");
+                if (!nameClass.matches("\\d+\\d+\\W+\\d")) {
+                    throw new InfoException("Invalid input data");
                 }
                 break;
             } catch (InfoException e) {
