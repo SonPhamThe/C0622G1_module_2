@@ -1,7 +1,6 @@
 public class aaha {
     public static void main(String[] args) {
-        String string = "30/04/1999";
-        string = string.replace("/", "");
-        System.out.println(string);
+        int[] day = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        System.out.println(day[04]);
     }
 }

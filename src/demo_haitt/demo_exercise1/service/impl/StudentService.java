@@ -164,6 +164,15 @@ public class StudentService implements IStudent {
                 if (!dayOfBirth.matches("\\d+\\d+\\W+\\d+\\d+\\W+\\d+\\d+\\d+\\d")) {
                     throw new InfoException("Invalid input data");
                 }
+                if (Integer.parseInt(dayOfBirth.substring(0, 1).concat(dayOfBirth.substring(1, 2))) > 31) {
+                    throw new InfoException("Invalid input data");
+                }
+                if (Integer.parseInt(dayOfBirth.substring(3, 4).concat(dayOfBirth.substring(4, 5))) > 12) {
+                    throw new InfoException("Invalid input data");
+                }
+                if (!checkDayMonthYear(dayOfBirth)) {
+                    throw new InfoException("Invalid input data");
+                }
                 if (Integer.parseInt(dayOfBirth.substring(6)) > 2015) {
                     throw new InfoException("Invalid input data");
                 }
@@ -219,5 +228,14 @@ public class StudentService implements IStudent {
         } while (true);
 
         return new Student(id, name, dayOfBirth, gender, nameClass, score);
+    }
+
+    public static boolean checkDayMonthYear(String string) {
+        int[] day = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        int[] arr = new int[3];
+        arr[0] = Integer.parseInt(string.substring(0, 1).concat(string.substring(1, 2)));
+        arr[1] = Integer.parseInt(string.substring(3, 4).concat(string.substring(4, 5)));
+        arr[2] = Integer.parseInt(string.substring(6));
+        return arr[0] <= day[arr[1] - 1];
     }
 }
