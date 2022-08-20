@@ -25,7 +25,7 @@ public class MotorBikeService implements IMotorBike {
     }
 
     @Override
-    public void diplayListMotorBike() {
+    public void displayListMotorBike() {
         for (MotorBike motor : motors) {
             System.out.println(motor);
         }

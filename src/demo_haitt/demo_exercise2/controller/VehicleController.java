@@ -66,7 +66,7 @@ public class VehicleController {
                             car.displayListCar();
                             break;
                         case 3:
-                            motor.diplayListMotorBike();
+                            motor.displayListMotorBike();
                             break;
                         case 4:
                             System.exit(0);

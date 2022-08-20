@@ -1,4 +1,4 @@
-package ss13_sort_algorithm.exercise.setting_insertion_sort;
+package ss14_sort_algorithm.exercise.setting_insertion_sort;
 
 public class InsertionSort {
     static int[] array = {1, 5, 2, 18, 10, 12, 25, 19};

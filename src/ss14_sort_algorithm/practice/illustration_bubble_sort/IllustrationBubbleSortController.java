@@ -1,4 +1,4 @@
-package ss13_sort_algorithm.practice.illustration_bubble_sort;
+package ss14_sort_algorithm.practice.illustration_bubble_sort;
 
 import java.util.Scanner;
 

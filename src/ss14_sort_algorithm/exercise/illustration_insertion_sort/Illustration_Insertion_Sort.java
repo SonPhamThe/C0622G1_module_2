@@ -1,4 +1,4 @@
-package ss13_sort_algorithm.exercise.illustration_insertion_sort;
+package ss14_sort_algorithm.exercise.illustration_insertion_sort;
 
 import java.util.Arrays;
 import java.util.Scanner;

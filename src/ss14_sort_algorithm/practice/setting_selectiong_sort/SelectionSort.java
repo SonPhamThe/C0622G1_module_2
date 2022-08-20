@@ -1,4 +1,4 @@
-package ss13_sort_algorithm.practice.setting_selectiong_sort;
+package ss14_sort_algorithm.practice.setting_selectiong_sort;
 
 import java.util.Arrays;
 

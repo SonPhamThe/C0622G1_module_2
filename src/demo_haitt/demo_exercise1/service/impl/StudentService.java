@@ -1,13 +1,10 @@
 package demo_haitt.demo_exercise1.service.impl;
 
-import demo_haitt.demo_exercise1.model.Person;
 import demo_haitt.demo_exercise1.model.Student;
+import demo_haitt.demo_exercise1.service.Exception.numberformatexception.InfoException;
 import demo_haitt.demo_exercise1.service.IStudent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class StudentService implements IStudent {
     private static final Scanner scan = new Scanner(System.in);
@@ -95,6 +92,18 @@ public class StudentService implements IStudent {
         System.out.println("Success sort");
     }
 
+    @Override
+    public void displayStudentOptional() {
+        System.out.println("Please enter score to display student");
+        int score = Integer.parseInt(scan.nextLine());
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getScore() >= score) {
+                System.out.println("List student has a score >= " + score);
+                System.out.println(students.get(i).toString());
+            }
+        }
+    }
+
     public Student findStudent() {
         System.out.println("Enter id student you want to find");
         int id = Integer.parseInt(scan.nextLine());
@@ -108,30 +117,107 @@ public class StudentService implements IStudent {
 
     public Student infoStudent() {
         int id;
-        int count;
-
         do {
-            count = 0;
             System.out.println("Enter id of Student");
-            id = Integer.parseInt(scan.nextLine());
-            for (Student student : students) {
-                if (student.getId() == id) {
-                    System.out.println("The id has been matched");
-                    count++;
+            try {
+                id = Integer.parseInt(scan.nextLine());
+                if (id < 0) {
+                    throw new InfoException("Id must be >0");
                 }
+                for (Student student : students) {
+                    if (student.getId() == id) {
+                        throw new InfoException("The id has been matched");
+                    }
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Id must be a number");
+            } catch (InfoException e) {
+                System.out.println(e.getMessage());
             }
-        } while (count != 0);
+        } while (true);
 
-        System.out.println("Enter name of Student");
-        String name = scan.nextLine();
-        System.out.println("Enter day of birth of Student");
-        String dayOfBirth = scan.nextLine();
-        System.out.println("Enter gender of Student");
-        String gender = scan.nextLine();
-        System.out.println("Enter name class of Student");
-        String nameClass = scan.nextLine();
-        System.out.println("Enter score of Student");
-        double score = Double.parseDouble(scan.nextLine());
+        String name;
+        do {
+            System.out.println("Enter name of Student");
+            try {
+                System.out.print("Mời bạn nhập tên: ");
+                name = (scan.nextLine());
+                String str;
+                for (int i = 0; i < name.length(); i++) {
+                    str = "";
+                    if ((str + name.charAt(i)).matches("\\d+")) {
+                        throw new InfoException("Tên bạn nhập ko hợp lệ");
+                    }
+                }
+
+                break;
+            } catch (InfoException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+
+        String dayOfBirth;
+        do {
+            try {
+                System.out.print("Mời bạn nhập ngày sinh: ");
+                dayOfBirth = scan.nextLine();
+                if (!dayOfBirth.matches("\\d+\\d+\\W+\\d+\\d+\\W+\\d+\\d+\\d+\\d")) {
+                    throw new InfoException("Dữ liệu không đúng định dạng");
+                }
+                if (Integer.parseInt(dayOfBirth.substring(6)) > 2016) {
+                    throw new InfoException("Dữ liệu không đúng định dạng");
+                }
+                break;
+            } catch (InfoException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+
+        String gender;
+        do {
+            System.out.println("Enter gender of Student");
+            try {
+                gender = scan.nextLine();
+                if (!gender.equals("male") && !gender.equals("female")) {
+                    throw new InfoException("Let enter gender is male or female, don't input exception");
+                }
+                break;
+            } catch (InfoException e) {
+                System.out.println("Let enter gender is male or female, don't input exception");
+                ;
+            }
+        } while (true);
+
+        String nameClass;
+        while (true) {
+            try {
+                System.out.print("Enter name of class: ");
+                nameClass = scan.nextLine();
+                if (!nameClass.matches("\\D+\\d+\\d+\\d+\\d+\\D+\\d")) {
+                    throw new InfoException("Tên lớp không hợp lệ");
+                }
+                break;
+            } catch (InfoException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        double score;
+        do {
+            System.out.println("Enter score of Student");
+            try {
+                score = Double.parseDouble(scan.nextLine());
+                if (score < 0 || score > 100) {
+                    throw new InfoException("Id must be >0 & <100");
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Score must be a number");
+            } catch (InfoException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
 
         return new Student(id, name, dayOfBirth, gender, nameClass, score);
     }

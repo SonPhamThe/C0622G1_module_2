@@ -1,4 +1,4 @@
-package ss13_sort_algorithm.practice.setting_bubble_sort;
+package ss14_sort_algorithm.practice.setting_bubble_sort;
 
 public class SettingBubbleSort {
     static int[] array = {2, 4, 5, 6, 7, 12, 10, 24, -5, -10};

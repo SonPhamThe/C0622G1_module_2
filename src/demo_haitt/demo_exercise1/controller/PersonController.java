@@ -30,11 +30,36 @@ public class PersonController {
                     System.out.println("1.1. Display information student");
                     System.out.println("1.2. Delete information student");
                     System.out.println("1.3. Add information student");
-                    System.out.println("1.4. Exit");
-                    choice = Integer.parseInt(scan.nextLine());
-                    switch (choice) {
+                    System.out.println("1.4. Again menu to choice");
+                    int chooseMenuStudent = 0;
+                    try {
+                        chooseMenuStudent = Integer.parseInt(scan.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Input must be a number");
+                    }
+                    switch (chooseMenuStudent) {
                         case 1:
-                            student.displayStudent();
+                            System.out.println("1.1.1.  Display information all of the student" +
+                                    "\n 1.1.2. Display the students on the optional score" +
+                                    "\n 1.1.3. Again menu to choice");
+                            try {
+                                chooseMenuStudent = Integer.parseInt(scan.nextLine());
+                            } catch (NumberFormatException e) {
+                                System.out.println("Input must be a number");
+                            }
+                            switch (chooseMenuStudent) {
+                                case 1:
+                                    student.displayStudent();
+                                    break;
+                                case 2:
+                                    student.displayStudentOptional();
+                                    break;
+                                case 3:
+                                    menuUser();
+                                    break;
+                                default:
+                                    System.out.println("Your selection is not suitable, selections from 1 to 3");
+                            }
                             break;
                         case 2:
                             student.deleteStudent();
@@ -43,7 +68,8 @@ public class PersonController {
                             student.addNewStudent();
                             break;
                         case 4:
-                            System.exit(0);
+                            menuUser();
+                            break;
                         default:
                             System.out.println("Your selection is not suitable, selections from 1 to 4");
                     }
@@ -52,9 +78,14 @@ public class PersonController {
                     System.out.println("2.1. Display information teacher");
                     System.out.println("2.2. Delete information teacher");
                     System.out.println("2.3. Add information teacher");
-                    System.out.println("2.4. Exit");
-                    choice = Integer.parseInt(scan.nextLine());
-                    switch (choice) {
+                    System.out.println("2.4. Again menu to choice");
+                    int chooseMenuTeacher = 0;
+                    try {
+                        chooseMenuTeacher = Integer.parseInt(scan.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Input must be a number");
+                    }
+                    switch (chooseMenuTeacher) {
                         case 1:
                             teacher.displayTeacher();
                             break;
@@ -65,7 +96,8 @@ public class PersonController {
                             teacher.addTeacher();
                             break;
                         case 4:
-                            System.exit(0);
+                            menuUser();
+                            break;
                         default:
                             System.out.println("Your selection is not suitable, selections from 1 to 4");
                     }
@@ -74,9 +106,14 @@ public class PersonController {
                     System.out.println("Choice option" +
                             "\n 1. Search for id" +
                             "\n 2. Search for name" +
-                            "\n 3. Exit");
-                    choice = Integer.parseInt(scan.nextLine());
-                    switch (choice) {
+                            "\n 3. Again menu to choice");
+                    int chooseSearch = 0;
+                    try {
+                        chooseSearch = Integer.parseInt(scan.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Input must be a number");
+                    }
+                    switch (chooseSearch) {
                         case 1:
                             person.searchID();
                             break;
@@ -84,7 +121,8 @@ public class PersonController {
                             person.searchName();
                             break;
                         case 3:
-                            System.exit(0);
+                            menuUser();
+                            break;
                         default:
                             System.out.println("Your selection is not suitable, selections from 1 to 3");
                     }
@@ -95,9 +133,14 @@ public class PersonController {
                             "\n 2. Sort the teacher by id" +
                             "\n 3. Sort the student by name" +
                             "\n 4. Sort the teacher by name:" +
-                            "\n 5. Exit");
-                    choice = Integer.parseInt(scan.nextLine());
-                    switch (choice) {
+                            "\n 5. Again menu to choice");
+                    int chooseSort = 0;
+                    try {
+                        chooseSort = Integer.parseInt(scan.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Input must be a number");
+                    }
+                    switch (chooseSort) {
                         case 1:
                             student.sortScore();
                             break;
@@ -111,7 +154,8 @@ public class PersonController {
                             teacher.sortName();
                             break;
                         case 5:
-                            System.exit(0);
+                            menuUser();
+                            break;
                         default:
                             System.out.println("Your selection is not suitable, selections from 1 to 5");
                     }
