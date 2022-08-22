@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class StudentService implements IStudent {
     private static final Scanner scan = new Scanner(System.in);
     private static final List<Student> students = new ArrayList<>();
-    private static fi String path = "src/ss16_text_file/exercise/mvc/data/person.txt";
+    private static final String path = "src/ss16_text_file/exercise/mvc/data/person.txt";
     private final ReadFile readFile = new ReadFile();
 
     @Override
