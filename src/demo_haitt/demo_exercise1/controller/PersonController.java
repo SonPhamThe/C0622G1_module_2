@@ -7,6 +7,7 @@ import demo_haitt.demo_exercise1.service.impl.PersonService;
 import demo_haitt.demo_exercise1.service.impl.StudentService;
 import demo_haitt.demo_exercise1.service.impl.TeacherService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class PersonController {
@@ -16,7 +17,7 @@ public class PersonController {
     private static final IStudent student = new StudentService();
     private static final ITeacher teacher = new TeacherService();
 
-    public void menuUser() {
+    public void menuUser() throws IOException {
         while (true) {
             System.out.println("Please choose from the options");
             System.out.println("1. Information of Student");

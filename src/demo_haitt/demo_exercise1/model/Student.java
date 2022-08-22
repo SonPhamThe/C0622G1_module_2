@@ -1,6 +1,6 @@
 package demo_haitt.demo_exercise1.model;
 
-public class Student extends Person  {
+public class Student extends Person {
     private String nameClass;
     private double score;
 
@@ -33,9 +33,7 @@ public class Student extends Person  {
 
     @Override
     public String toString() {
-        return "Person is a student have a " +
-                "nameClass = " + nameClass +
-                ", score = " + score + super.toString();
+        return String.format("%s,%s,%s", super.toString(), nameClass, score);
     }
 
 //    @Override

@@ -1,6 +1,5 @@
 package demo_haitt.demo_exercise1.service.util;
-
-import ss16_text_file.exercise.mvc.model.Student;
+import demo_haitt.demo_exercise1.model.Student;
 
 import java.io.BufferedReader;
 import java.io.File;

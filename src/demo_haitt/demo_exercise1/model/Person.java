@@ -51,9 +51,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return ", id = " + id +
-                ", name = " + name +
-                ", dayOfBirth = " + dayOfBirth+
-                ", gender = " + gender;
+        return String.format("%s,%s,%s,%s",id,name,dayOfBirth,gender);
     }
 }

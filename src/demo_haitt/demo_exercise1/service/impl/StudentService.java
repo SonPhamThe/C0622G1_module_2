@@ -3,31 +3,48 @@ package demo_haitt.demo_exercise1.service.impl;
 import demo_haitt.demo_exercise1.model.Student;
 import demo_haitt.demo_exercise1.service.Exception.numberformatexception.InfoException;
 import demo_haitt.demo_exercise1.service.IStudent;
+import demo_haitt.demo_exercise1.service.util.ReadFile;
+import demo_haitt.demo_exercise1.service.util.WriteFile;
 
+import java.io.IOException;
 import java.util.*;
 
 public class StudentService implements IStudent {
     private static final Scanner scan = new Scanner(System.in);
-    static final List<Student> students = new ArrayList<>();
+    static List<Student> students;
 
-    static {
-        students.add(new Student(5, "son", "12/04/1999", "male", "ab", 6));
-        students.add(new Student(6, "vinh", "15/05/1999", "male", "ac", 9));
-        students.add(new Student(7, "peter", "13/06/1999", "male", "ad", 8));
-    }
+    private static final String path = "src/demo_haitt/demo_exercise1/data/person.txt";
+
+//    static {
+//        students.add(new Student(5, "son", "12/04/1999", "male", "ab", 6));
+//        students.add(new Student(6, "vinh", "15/05/1999", "male", "ac", 9));
+//        students.add(new Student(7, "peter", "13/06/1999", "male", "ad", 8));
+//    }
 
     @Override
-    public void displayStudent() {
+    public void displayStudent() throws IOException {
+        System.out.println("-------------List the student----------");
+        students = ReadFile.readStudentFile(path);
+
+        if(students.size()==0) {
+            System.out.println("List the student is empty");
+        }
+
         for (Student student : students) {
-            System.out.println(student);
+            System.out.println(student.toString());
         }
     }
 
     @Override
-    public void addNewStudent() {
+    public void addNewStudent() throws IOException {
+        students = ReadFile.readStudentFile(path);
         Student student = this.infoStudent();
         students.add(student);
+
         System.out.println("Successful add");
+
+        WriteFile.writeStudentFile(path,students);
+
     }
 
     @Override
