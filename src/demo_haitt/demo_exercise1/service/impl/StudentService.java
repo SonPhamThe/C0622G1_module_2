@@ -236,6 +236,9 @@ public class StudentService implements IStudent {
         arr[0] = Integer.parseInt(string.substring(0, 1).concat(string.substring(1, 2)));
         arr[1] = Integer.parseInt(string.substring(3, 4).concat(string.substring(4, 5)));
         arr[2] = Integer.parseInt(string.substring(6));
-        return arr[0] <= day[arr[1] - 1];
+        if (arr[2] % 4 == 0 && !(arr[2] % 100 == 0 && arr[2] % 400 != 0)) {
+            arr[0] = day[arr[1] - 1] + 1;
+        }
+        return (arr[0] <= day[arr[1] - 1]);
     }
 }

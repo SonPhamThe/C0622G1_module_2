@@ -1,0 +1,4 @@
+1,Phạm Thế Sơn, 12/04/1999, Nam, C0622G1, 2.0
+2,Phạm Quang Vinh, 13/04/1999, Nam, C0622G1, 3.0
+3,Hoàng Đức Danh, 14/04/1999, Nam, C0622G1, 4.0
+4,Peter, 15/04/1999, Nam, C0622G1, 5.0
