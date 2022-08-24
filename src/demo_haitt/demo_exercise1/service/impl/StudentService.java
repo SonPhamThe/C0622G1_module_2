@@ -4,7 +4,8 @@ import demo_haitt.demo_exercise1.model.Student;
 import demo_haitt.demo_exercise1.service.Exception.numberformatexception.InfoException;
 import demo_haitt.demo_exercise1.service.IStudent;
 import demo_haitt.demo_exercise1.service.util.ReadFile;
-import demo_haitt.demo_exercise1.service.util.WriteFile;
+import demo_haitt.demo_exercise1.service.util.WriteFIle;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,8 +26,7 @@ public class StudentService implements IStudent {
     public void displayStudent() throws IOException {
         System.out.println("-------------List the student----------");
         students = ReadFile.readStudentFile(path);
-
-        if(students.size()==0) {
+        if (students.size() == 0) {
             System.out.println("List the student is empty");
         }
 
@@ -40,15 +40,13 @@ public class StudentService implements IStudent {
         students = ReadFile.readStudentFile(path);
         Student student = this.infoStudent();
         students.add(student);
-
         System.out.println("Successful add");
-
-        WriteFile.writeStudentFile(path,students);
-
+        WriteFIle.writeStudentFile(path, students);
     }
 
     @Override
     public void deleteStudent() {
+        students = ReadFile.readStudentFile(path);
         Student student = this.findStudent();
         if (student == null) {
             System.out.println("Not found student valid");
@@ -64,7 +62,8 @@ public class StudentService implements IStudent {
     }
 
     @Override
-    public void sortScore() {
+    public void sortScore() throws IOException {
+        students = ReadFile.readStudentFile(path);
         System.out.println("Select sort by name from: " +
                 "\n 1. Big to small" +
                 "\n 2. Small to big" +
@@ -84,10 +83,12 @@ public class StudentService implements IStudent {
             default:
                 System.out.println("Your selection is not suitable, selections from 1 to 3");
         }
+        WriteFIle.writeStudentFile(path, students);
     }
 
     @Override
-    public void sortName() {
+    public void sortName() throws IOException {
+        students = ReadFile.readStudentFile(path);
         System.out.println("Welcome to the programing");
 
         boolean needNextPass = true;
@@ -104,7 +105,7 @@ public class StudentService implements IStudent {
 
             }
         }
-
+        WriteFIle.writeStudentFile(path, students);
 
         System.out.println("Success sort");
     }
@@ -121,7 +122,112 @@ public class StudentService implements IStudent {
         }
     }
 
+    @Override
+    public void editStudent() throws IOException {
+        students = ReadFile.readStudentFile(path);
+
+        Student student = this.findStudent();
+
+        int positionEdit = students.indexOf(student);
+
+        if (student == null) {
+            System.out.println("No have id in list student");
+        }
+        int chooseEdit;
+        do {
+            System.out.println("--------------------------");
+            System.out.println("Student need edit" +
+                    "\n 1. Id" +
+                    "\n 2. Name of student" +
+                    "\n 3. Day of birth student" +
+                    "\n 4. Gender of student" +
+                    "\n 5. Score" +
+                    "\n 6. Name Class of student" +
+                    "\n 7. Exit");
+            try {
+                chooseEdit = Integer.parseInt(scan.nextLine());
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+            }
+            switch (chooseEdit) {
+                case 1:
+                    int idEdit;
+                    do {
+                        System.out.println("Enter id to edit of Student");
+                        try {
+                            idEdit = Integer.parseInt(scan.nextLine());
+                            if (idEdit < 0) {
+                                throw new InfoException("Id must be >0");
+                            }
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Id must be a number");
+                        } catch (InfoException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } while (true);
+                    students.get(positionEdit).setId(idEdit);
+                    System.out.println("Success Edit");
+                    break;
+                case 2:
+                    String nameStudentEdit;
+                    do {
+                        System.out.println("Enter name of Student");
+                        try {
+                            nameStudentEdit = (scan.nextLine());
+                            String str;
+                            for (int i = 0; i < nameStudentEdit.length(); i++) {
+                                str = "";
+                                if ((str + nameStudentEdit.charAt(i)).matches("\\d+")) {
+                                    throw new InfoException("Input invalid");
+                                }
+                            }
+
+                            break;
+                        } catch (InfoException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } while (true);
+                    students.get(positionEdit).setName(nameStudentEdit);
+                    System.out.println("Success Edit");
+                    break;
+                case 3:
+                    System.out.println("Enter day of birth want to edit");
+                    String dayOfBirthEdit = scan.nextLine();
+                    students.get(positionEdit).setDayOfBirth(dayOfBirthEdit);
+                    System.out.println("Success Edit");
+                    break;
+                case 4:
+                    System.out.println("Enter gender of Student want to edit");
+                    String genderEdit = scan.nextLine();
+                    students.get(positionEdit).setGender(genderEdit);
+                    System.out.println("Success Edit");
+                    break;
+                case 5:
+                    System.out.println("Enter score want to edit");
+                    double scoreEdit = Double.parseDouble(scan.nextLine());
+                    students.get(positionEdit).setScore(scoreEdit);
+                    System.out.println("Success Edit");
+                    break;
+                case 6:
+                    System.out.println("Enter name of class want to edit");
+                    String nameOfClassEdit = scan.nextLine();
+                    students.get(positionEdit).setNameClass(nameOfClassEdit);
+                    System.out.println("Success Edit");
+                    break;
+                case 7:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Your selection is not suitable, selections from 1 to 4");
+            }
+            break;
+        } while (true);
+        WriteFIle.writeStudentFile(path, students);
+    }
+
     public Student findStudent() {
+        students = ReadFile.readStudentFile(path);
         System.out.println("Enter id student you want to find");
         int id = Integer.parseInt(scan.nextLine());
         for (Student student : students) {
@@ -132,7 +238,7 @@ public class StudentService implements IStudent {
         return null;
     }
 
-    public Student infoStudent() {
+    public Student infoStudent() throws IOException {
         int id;
         do {
             System.out.println("Enter id of Student");
@@ -257,5 +363,21 @@ public class StudentService implements IStudent {
             arr[0] = day[arr[1] - 1] + 1;
         }
         return (arr[0] <= day[arr[1] - 1]);
+    }
+
+    private int checkId() throws IOException {
+        students = ReadFile.readStudentFile(path);
+        int nextId = 0;
+        if (students.size() == 0) {
+            return 1;
+        } else {
+            nextId = students.get(0).getId();
+            for (Student student : students) {
+                if (nextId < student.getId()) {
+                    nextId = student.getId();
+                }
+            }
+        }
+        return nextId + 1;
     }
 }

@@ -9,7 +9,7 @@ public class MainClassFan {
        fan1.setOn(false);
 
        ClassFan fan2 = new ClassFan();
-        fan2.setSpeed(1);
+        fan2.setSpeed(2);
         fan2.setRadius(4.0);
         fan2.setColor("white");
         fan2.setOn(true);

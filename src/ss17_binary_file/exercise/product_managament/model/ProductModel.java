@@ -1,15 +1,15 @@
-package ss12_java_collection_framework.exercise.arraylist_linkedlist.model;
+package ss17_binary_file.exercise.product_managament.model;
 
-public class Product implements Comparable<Product>{
+public class ProductModel implements Comparable<ProductModel> {
     private int idProduct;
     private String nameProduct;
     private double priceProduct;
     private String producer;
 
-    public Product() {
+    public ProductModel() {
     }
 
-    public Product(int idProduct, String nameProduct, double moneyProduct, String producer) {
+    public ProductModel(int idProduct, String nameProduct, double moneyProduct, String producer) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.priceProduct = moneyProduct;
@@ -58,7 +58,7 @@ public class Product implements Comparable<Product>{
     }
 
     @Override
-    public int compareTo(Product o) {
+    public int compareTo(ProductModel o) {
         return (int) (this.getMoneyProduct() - o.getMoneyProduct());
     }
 }

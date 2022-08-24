@@ -24,7 +24,8 @@ public class PersonController {
             System.out.println("2. Information of Teacher");
             System.out.println("3. Search of information");
             System.out.println("4. Sort of list Person");
-            System.out.println("5. Exit All");
+            System.out.println("5. Edit of list Person");
+            System.out.println("6. Exit All");
             int choice = Integer.parseInt(scan.nextLine());
             switch (choice) {
                 case 1:
@@ -162,9 +163,26 @@ public class PersonController {
                     }
                     break;
                 case 5:
-                    System.exit(0);
-                default:
-                    System.out.println("Your selection is not suitable, selections from 1 to 3");
+                    System.out.println("6.1 Edit list Student" +
+                            "\n 6.2 Edit list teacher" +
+                            "\n 6.3 Back to menu" +
+                            "\n 6.4 Exit");
+                    int chooseEdit = 0;
+                    try {
+                        chooseEdit = Integer.parseInt(scan.nextLine());
+                    } catch (NumberFormatException e) {
+                        throw new RuntimeException(e);
+                    }
+                    switch (chooseEdit) {
+                        case 1:
+                            student.editStudent();
+                            break;
+                        case 6:
+                            System.exit(0);
+                        default:
+                            System.out.println("Your selection is not suitable, selections from 1 to 3");
+                    }
+                    break;
             }
         }
     }

@@ -9,9 +9,11 @@ public interface IStudent {
 
     void deleteStudent();
 
-    void sortScore();
+    void sortScore() throws IOException;
 
-    void sortName();
+    void sortName() throws IOException;
 
     void displayStudentOptional();
+
+    void editStudent() throws IOException;
 }

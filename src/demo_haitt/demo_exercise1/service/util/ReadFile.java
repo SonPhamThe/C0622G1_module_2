@@ -1,30 +1,31 @@
 package demo_haitt.demo_exercise1.service.util;
+
 import demo_haitt.demo_exercise1.model.Student;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReadFile {
-    public static List<String> readFile(String path) throws IOException {
-        File file = new File(path);
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferReader = new BufferedReader(fileReader);
-
+    public static List<String> readFile(String path) {
+        FileReader fileReader;
+        BufferedReader bufferReader = null;
         String line;
         List<String> strings = new ArrayList<>();
-//        bufferReader.readLine(); loại bỏ tiêu đề
-        while ((line = bufferReader.readLine()) != null) {
-            strings.add(line);
+        try {
+            fileReader = new FileReader(path);
+            bufferReader = new BufferedReader(fileReader);
+            while ((line = bufferReader.readLine()) != null) {
+                strings.add(line);
+            }
+            bufferReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        bufferReader.close();
         return strings;
     }
 
-    public static List<Student> readStudentFile(String path) throws IOException {
+    public static List<Student> readStudentFile(String path) {
         List<String> strings = readFile(path);
         List<Student> students = new ArrayList<>();
         String[] info;
