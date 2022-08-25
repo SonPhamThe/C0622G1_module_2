@@ -4,8 +4,8 @@ public abstract class Person {
     private String name;
     private String dayOfBirth;
     private String gender;
-    private long CMND;
-    private long numberOfPhone;
+    private String CMND;
+    private String numberOfPhone;
     private String email;
 
     public Person() {
@@ -36,19 +36,19 @@ public abstract class Person {
         this.gender = gender;
     }
 
-    public long getCMND() {
+    public String getCMND() {
         return CMND;
     }
 
-    public void setCMND(long CMND) {
+    public void setCMND(String CMND) {
         this.CMND = CMND;
     }
 
-    public long getNumberOfPhone() {
+    public String getNumberOfPhone() {
         return numberOfPhone;
     }
 
-    public void setNumberOfPhone(long numberOfPhone) {
+    public void setNumberOfPhone(String numberOfPhone) {
         this.numberOfPhone = numberOfPhone;
     }
 
@@ -61,7 +61,7 @@ public abstract class Person {
     }
 
 
-    public Person(String nameEmployee, String dayOfBirth, String gender, long CMND, long numberOfPhone, String email) {
+    public Person(String nameEmployee, String dayOfBirth, String gender, String CMND, String numberOfPhone, String email) {
         this.name = nameEmployee;
         this.dayOfBirth = dayOfBirth;
         this.gender = gender;
@@ -72,13 +72,12 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                ", nameEmployee='" + name + '\'' +
-                ", dayOfBirth='" + dayOfBirth + '\'' +
-                ", gender='" + gender + '\'' +
-                ", CMND=" + CMND +
-                ", numberOfPhone=" + numberOfPhone +
-                ", email='" + email+
-                '}';
+        return " and has " +
+                "nameEmployee = " + name+
+                ", dayOfBirth = " + dayOfBirth+
+                ", gender = " + gender+
+                ", CMND = " + CMND +
+                ", numberOfPhone = " + numberOfPhone +
+                ", email = " + email;
     }
 }

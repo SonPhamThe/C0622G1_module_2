@@ -1,9 +1,8 @@
-package demo_haitt.demo_exercise1.service.util;
+package demo_haitt.demo_exercise1.service.util.write_readfile;
 
 import demo_haitt.demo_exercise1.model.Student;
 
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;

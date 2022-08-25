@@ -3,9 +3,11 @@ package demo_haitt.demo_exercise1.service.impl;
 import demo_haitt.demo_exercise1.model.Student;
 import demo_haitt.demo_exercise1.service.Exception.numberformatexception.InfoException;
 import demo_haitt.demo_exercise1.service.IStudent;
-import demo_haitt.demo_exercise1.service.util.ReadFile;
-import demo_haitt.demo_exercise1.service.util.WriteFIle;
-import org.w3c.dom.ls.LSOutput;
+import demo_haitt.demo_exercise1.service.util.validate.DayOfBirth;
+import demo_haitt.demo_exercise1.service.util.validate.NameClassValidate;
+import demo_haitt.demo_exercise1.service.util.validate.NameObject;
+import demo_haitt.demo_exercise1.service.util.write_readfile.ReadFile;
+import demo_haitt.demo_exercise1.service.util.write_readfile.WriteFIle;
 
 import java.io.IOException;
 import java.util.*;
@@ -64,10 +66,7 @@ public class StudentService implements IStudent {
     @Override
     public void sortScore() throws IOException {
         students = ReadFile.readStudentFile(path);
-        System.out.println("Select sort by name from: " +
-                "\n 1. Big to small" +
-                "\n 2. Small to big" +
-                "\n 3. Exit");
+        System.out.println("Select sort by name from: " + "\n 1. Big to small" + "\n 2. Small to big" + "\n 3. Exit");
         int choose = Integer.parseInt(scan.nextLine());
         switch (choose) {
             case 1:
@@ -136,14 +135,7 @@ public class StudentService implements IStudent {
         int chooseEdit;
         do {
             System.out.println("--------------------------");
-            System.out.println("Student need edit" +
-                    "\n 1. Id" +
-                    "\n 2. Name of student" +
-                    "\n 3. Day of birth student" +
-                    "\n 4. Gender of student" +
-                    "\n 5. Score" +
-                    "\n 6. Name Class of student" +
-                    "\n 7. Exit");
+            System.out.println("Student need edit" + "\n 1. Id" + "\n 2. Name of student" + "\n 3. Day of birth student" + "\n 4. Gender of student" + "\n 5. Score" + "\n 6. Name Class of student" + "\n 7. Exit");
             try {
                 chooseEdit = Integer.parseInt(scan.nextLine());
             } catch (NumberFormatException e) {
@@ -175,12 +167,9 @@ public class StudentService implements IStudent {
                         System.out.println("Enter name of Student");
                         try {
                             nameStudentEdit = (scan.nextLine());
-                            String str;
-                            for (int i = 0; i < nameStudentEdit.length(); i++) {
-                                str = "";
-                                if ((str + nameStudentEdit.charAt(i)).matches("\\d+")) {
-                                    throw new InfoException("Input invalid");
-                                }
+
+                            if (!NameObject.checkNameObject(nameStudentEdit)) {
+                                throw new InfoException("Input invalid");
                             }
 
                             break;
@@ -192,26 +181,72 @@ public class StudentService implements IStudent {
                     System.out.println("Success Edit");
                     break;
                 case 3:
-                    System.out.println("Enter day of birth want to edit");
-                    String dayOfBirthEdit = scan.nextLine();
+                    String dayOfBirthEdit;
+                    do {
+                        System.out.println("Enter day of birth want to edit");
+                        try {
+                            dayOfBirthEdit = scan.nextLine();
+                            if (!DayOfBirth.checkDayOfBirth(dayOfBirthEdit)) {
+                                throw new InfoException("Input invalid");
+                            }
+                            break;
+                        } catch (InfoException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } while (true);
                     students.get(positionEdit).setDayOfBirth(dayOfBirthEdit);
                     System.out.println("Success Edit");
                     break;
                 case 4:
-                    System.out.println("Enter gender of Student want to edit");
-                    String genderEdit = scan.nextLine();
+                    String genderEdit;
+                    do {
+                        System.out.println("Enter gender of Student");
+                        try {
+                            genderEdit = scan.nextLine();
+                            if (!genderEdit.equals("male") && !genderEdit.equals("female")) {
+                                throw new InfoException("Let enter gender is male or female, don't input exception");
+                            }
+                            break;
+                        } catch (InfoException e) {
+                            System.out.println("Let enter gender is male or fe098765432male, don't input exception");
+                        }
+                    } while (true);
                     students.get(positionEdit).setGender(genderEdit);
                     System.out.println("Success Edit");
                     break;
                 case 5:
-                    System.out.println("Enter score want to edit");
-                    double scoreEdit = Double.parseDouble(scan.nextLine());
+                    double scoreEdit;
+                    do {
+                        System.out.println("Enter score want to edit");
+                        try {
+                            scoreEdit = Double.parseDouble(scan.nextLine());
+                            if (scoreEdit < 0) {
+                                throw new InfoException("Input invalid");
+                            }
+                            break;
+                        } catch (InfoException e) {
+                            throw new RuntimeException(e);
+                        } catch (NumberFormatException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } while (true);
                     students.get(positionEdit).setScore(scoreEdit);
                     System.out.println("Success Edit");
                     break;
                 case 6:
-                    System.out.println("Enter name of class want to edit");
-                    String nameOfClassEdit = scan.nextLine();
+                    String nameOfClassEdit;
+                    do {
+                        System.out.println("Enter name of class want to edit");
+                        try {
+                            nameOfClassEdit = scan.nextLine();
+                            if (!NameClassValidate.checkNameClass(nameOfClassEdit)) {
+                                throw new InfoException("Input invalid");
+                            }
+                            break;
+                        } catch (InfoException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } while (true);
                     students.get(positionEdit).setNameClass(nameOfClassEdit);
                     System.out.println("Success Edit");
                     break;
@@ -219,7 +254,7 @@ public class StudentService implements IStudent {
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Your selection is not suitable, selections from 1 to 4");
+                    System.out.println("Your selection is not suitable, selections from 1 to 7");
             }
             break;
         } while (true);
@@ -259,18 +294,15 @@ public class StudentService implements IStudent {
                 System.out.println(e.getMessage());
             }
         } while (true);
+        checkId();
 
         String name;
         do {
             System.out.println("Enter name of Student");
             try {
                 name = (scan.nextLine());
-                String str;
-                for (int i = 0; i < name.length(); i++) {
-                    str = "";
-                    if ((str + name.charAt(i)).matches("\\d+")) {
-                        throw new InfoException("Input invalid");
-                    }
+                if (!NameObject.checkNameObject(name)) {
+                    throw new InfoException("Input invalid");
                 }
 
                 break;
@@ -284,7 +316,7 @@ public class StudentService implements IStudent {
             try {
                 System.out.print("Enter day of birth: ");
                 dayOfBirth = scan.nextLine();
-                if (!dayOfBirth.matches("\\d+\\d+\\W+\\d+\\d+\\W+\\d+\\d+\\d+\\d")) {
+                if (!DayOfBirth.checkDayOfBirth(dayOfBirth)) {
                     throw new InfoException("Invalid input data");
                 }
                 if (Integer.parseInt(dayOfBirth.substring(0, 1).concat(dayOfBirth.substring(1, 2))) > 31) {
@@ -300,7 +332,7 @@ public class StudentService implements IStudent {
                     throw new InfoException("Invalid input data");
                 }
                 break;
-            } catch (InfoException e) {
+            } catch (InfoException | NumberFormatException e) {
                 System.out.println(e.getMessage());
             }
         } while (true);
@@ -315,7 +347,7 @@ public class StudentService implements IStudent {
                 }
                 break;
             } catch (InfoException e) {
-                System.out.println("Let enter gender is male or female, don't input exception");
+                System.out.println("Let enter gender is male or fe098765432male, don't input exception");
                 ;
             }
         } while (true);
@@ -325,7 +357,7 @@ public class StudentService implements IStudent {
             try {
                 System.out.print("Enter name of class: ");
                 nameClass = scan.nextLine();
-                if (!nameClass.matches("\\d+\\d+\\W+\\d")) {
+                if (!NameClassValidate.checkNameClass(nameClass)) {
                     throw new InfoException("Invalid input data");
                 }
                 break;

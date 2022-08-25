@@ -1,7 +1,9 @@
 package case_study.controller;
 
+import case_study.service.ICustomer;
 import case_study.service.IEmployee;
 import case_study.service.IFacility;
+import case_study.service.impl.CustomerService;
 import case_study.service.impl.EmployeeService;
 import case_study.service.impl.FacilityService;
 
@@ -10,9 +12,11 @@ import java.util.Scanner;
 
 public class FurammaController {
     private static final Scanner scan = new Scanner(System.in);
+
     private static final IFacility furamaResort = new FacilityService();
     private static final IEmployee employee = new EmployeeService();
 
+    private static final ICustomer customer = new CustomerService();
     public void menuUser() throws IOException {
         while (true) {
             System.out.println("---------------Welcome to Furama resort----------");
@@ -52,8 +56,10 @@ public class FurammaController {
                             employee.addEmployee();
                             break;
                         case 3:
+                            employee.editEmployee();
                             break;
                         case 4:
+                            menuUser();
                             break;
                         case 5:
                             System.exit(0);
@@ -78,6 +84,7 @@ public class FurammaController {
                         case 1:
                             break;
                         case 2:
+                            customer.addCustomer();
                             break;
                         case 3:
                             break;
