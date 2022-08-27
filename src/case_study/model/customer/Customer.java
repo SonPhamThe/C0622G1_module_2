@@ -3,9 +3,9 @@ package case_study.model.customer;
 import case_study.model.person.Person;
 
 public class Customer extends Person {
-   private String customerId;
-   private String customerType;
-   private String addressCustomer;
+    private String customerId;
+    private String customerType;
+    private String addressCustomer;
 
     public Customer(String customerId, String customerType, String addressCustomer) {
         this.customerId = customerId;
@@ -46,10 +46,11 @@ public class Customer extends Person {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "customerId='" + customerId + '\'' +
-                ", customerType='" + customerType + '\'' +
-                ", addressCustomer='" + addressCustomer + '\'' +
-                '}';
+        return String.format("%s,%s,%s,%s", customerId, customerType, addressCustomer, super.toString());
+//        return "Customer{" +
+//                "customerId='" + customerId + '\'' +
+//                ", customerType='" + customerType + '\'' +
+//                ", addressCustomer='" + addressCustomer + '\'' +
+//                '}';
     }
 }

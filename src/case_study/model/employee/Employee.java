@@ -32,16 +32,6 @@ public class Employee extends Person {
     }
 
     public String getLevel() {
-        switch (this.level) {
-            case "1":
-                return "Intermediate";
-            case "2":
-                return "College";
-            case "3":
-                return "University";
-            case "4":
-                return "After University";
-        }
         return this.level;
     }
 
@@ -50,20 +40,6 @@ public class Employee extends Person {
     }
 
     public String getLocation() {
-        switch (this.location) {
-            case "1":
-                return "Receptionist";
-            case "2":
-                return "Service";
-            case "3":
-                return "Expert";
-            case "4":
-                return "Monitoring";
-            case "5":
-                return "Manage";
-            case "6":
-                return "Manager";
-        }
         return location;
     }
 
@@ -81,9 +57,10 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Employee has a Id = " + employeeId +
-                ", level = " + level +
-                ", location = " + location +
-                ", wage = " + wage + super.toString();
+        return String.format("%s,%s,%s,%s,%s", employeeId, level, location, super.toString(),wage);
+//        return "Employee has a Id = " + employeeId +
+//                ", level = " + level +
+//                ", location = " + location +
+//                ", wage = " + wage + super.toString();
     }
 }

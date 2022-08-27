@@ -16,7 +16,7 @@ public abstract class Person {
         return name;
     }
 
-    public void setNameEmployee(String nameEmployee) {
+    public void setNamePerson(String nameEmployee) {
         this.name = nameEmployee;
     }
 
@@ -72,12 +72,13 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return " and has " +
-                "nameEmployee = " + name+
-                ", dayOfBirth = " + dayOfBirth+
-                ", gender = " + gender+
-                ", CMND = " + CMND +
-                ", numberOfPhone = " + numberOfPhone +
-                ", email = " + email;
+        return String.format("%s,%s,%s,%s,%s,%s", name, dayOfBirth, gender, CMND, numberOfPhone, email);
+//        return " and has " +
+//                "nameEmployee = " + name+
+//                ", dayOfBirth = " + dayOfBirth+
+//                ", gender = " + gender+
+//                ", CMND = " + CMND +
+//                ", numberOfPhone = " + numberOfPhone +
+//                ", email = " + email;
     }
 }

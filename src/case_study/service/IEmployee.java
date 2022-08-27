@@ -7,5 +7,5 @@ public interface IEmployee {
 
     void displayEmployee();
 
-    void editEmployee();
+    void editEmployee() throws IOException;
 }
