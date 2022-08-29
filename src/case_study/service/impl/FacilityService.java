@@ -50,6 +50,7 @@ public class FacilityService implements IFacility {
                     VillaFurama villa = VillaService.getVilla();
                     villas.add(villa);
                     check = true;
+                    facility.put(villa, 0);
                     System.out.println("Success add");
                     WriteFileVilla.writeVillaFile(PATH_VILLA, villas);
                     break;
@@ -58,6 +59,7 @@ public class FacilityService implements IFacility {
                     HouseFurama house = HouseService.getHouse();
                     houses.add(house);
                     System.out.println("Success add");
+                    facility.put(house, 0);
                     check = true;
                     WriteFileHouse.writeHouseFile(PATH_HOUSE, houses);
                     break;
@@ -66,6 +68,7 @@ public class FacilityService implements IFacility {
                     RoomFurama room = RoomService.getRoom();
                     rooms.add(room);
                     System.out.println("Success add");
+                    facility.put(room, 0);
                     check = true;
                     WriteFileRoom.writeRoomFile(PATH_ROOM, rooms);
                     break;

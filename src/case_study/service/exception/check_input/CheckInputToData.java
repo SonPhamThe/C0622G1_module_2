@@ -2,10 +2,14 @@ package case_study.service.exception.check_input;
 
 import case_study.service.exception.CheckException;
 
+import java.util.Scanner;
+
 public class CheckInputToData {
+    private static final Scanner scan = new Scanner(System.in);
     public static Double checkInputToDouble(double temp) {
         do {
             try {
+                temp = Double.parseDouble(scan.nextLine());
                 if (temp < 30) {
                     throw new CheckException("Id must be > 30");
                 }

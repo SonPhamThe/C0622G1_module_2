@@ -1,6 +1,4 @@
 package ss12_java_collection_framework.practice.hashmap_hashset.controller;
-
-import com.sun.source.tree.UsesTree;
 import ss12_java_collection_framework.practice.hashmap_hashset.model.Student;
 
 import java.util.HashMap;

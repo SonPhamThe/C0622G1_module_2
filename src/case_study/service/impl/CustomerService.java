@@ -3,10 +3,9 @@ package case_study.service.impl;
 import case_study.model.customer.Customer;
 import case_study.service.ICustomer;
 import case_study.service.exception.CheckException;
-import case_study.service.exception.check_day_of_birth.CheckDayOfBirth;
 import case_study.service.utils.readfile.ReadFileCustomers;
 import case_study.service.utils.writefile.WriteFileCustomer;
-import case_study.service.validate.employee.*;
+import case_study.service.utils.validate.employee.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -19,8 +18,9 @@ public class CustomerService implements ICustomer {
 
     private static final String PATH_CUSTOMER = "src/case_study/data/customer.csv";
 
-    private static final String DAY_OF_BIRTH = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+    private static final String NAME_CUSTOMER = "^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$";
 
+    private static final String DAY_OF_BIRTH = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
     @Override
     public void addCustomer() throws IOException {
@@ -52,7 +52,7 @@ public class CustomerService implements ICustomer {
         if (customer == null) {
             System.out.println("No have id in list Customer");
         } else {
-            int chooseEdit;
+            int chooseEdit = 0;
             do {
                 System.out.println("--------------------------");
                 System.out.println("Customer need edit" +
@@ -70,7 +70,7 @@ public class CustomerService implements ICustomer {
                 try {
                     chooseEdit = Integer.parseInt(scan.nextLine());
                 } catch (NumberFormatException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Input invalid");
                 }
                 switch (chooseEdit) {
                     case 1:
@@ -79,20 +79,39 @@ public class CustomerService implements ICustomer {
                             System.out.println("Enter name of Customer");
                             try {
                                 nameCustomerEdit = scan.nextLine();
-                                if (!nameCustomerEdit.matches("^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$")) {
+                                if (!nameCustomerEdit.matches(NAME_CUSTOMER)) {
                                     throw new CheckException("Input invalid");
                                 }
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         customers.get(positionEdit).setNamePerson(nameCustomerEdit);
                         System.out.println("Success Edit");
                         break;
                     case 2:
-                        String dayOfBirthEdit = scan.nextLine();
-                        CheckDayOfBirth.checkDayOfBirth(dayOfBirthEdit);
+                        String dayOfBirthEdit;
+                        do {
+                            System.out.println("Enter day of birth customer");
+                            try {
+                                dayOfBirthEdit= scan.nextLine();
+                                if (Integer.parseInt(dayOfBirthEdit.substring(6)) > 2014) {
+                                    throw new CheckException("Year old must be >18");
+                                }
+                                if (Integer.parseInt(dayOfBirthEdit.substring(6)) < 1922) {
+                                    throw new CheckException("Year old mus be <100");
+                                }
+                                if (!dayOfBirthEdit.matches(DAY_OF_BIRTH)) {
+                                    throw new CheckException("Input invalid");
+                                }
+                                break;
+                            } catch (NumberFormatException e) {
+                                System.out.println("Day of birth must be a number");
+                            } catch (CheckException | StringIndexOutOfBoundsException e) {
+                                System.out.println("Input invalid and string index of bound");
+                            }
+                        } while (true);
                         customers.get(positionEdit).setDayOfBirth(dayOfBirthEdit);
                         System.out.println("Success Edit");
                         break;
@@ -124,7 +143,7 @@ public class CustomerService implements ICustomer {
                                 }
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         customers.get(positionEdit).setCMND(cmndEdit);
@@ -141,7 +160,7 @@ public class CustomerService implements ICustomer {
                                 }
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         customers.get(positionEdit).setNumberOfPhone(numberOfPhone);
@@ -159,15 +178,27 @@ public class CustomerService implements ICustomer {
 
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         customers.get(positionEdit).setEmail(emailEdit);
                         System.out.println("Success Edit");
                         break;
                     case 7:
-                        System.out.println("Enter id of Customers want to edit");
-                        String idEdit = scan.nextLine();
+                        String idEdit;
+                        do {
+                            System.out.println("Enter id of Customer want to edit");
+                            try {
+                                idEdit = scan.nextLine();
+                                if (!idEdit.matches("\\S+")) {
+                                    throw new CheckException("Input invalid");
+                                }
+
+                                break;
+                            } catch (CheckException e) {
+                                System.out.println("Input invalid");
+                            }
+                        } while (true);
                         customers.get(positionEdit).setCustomerId(idEdit);
                         System.out.println("Success Edit");
                         break;
@@ -219,7 +250,7 @@ public class CustomerService implements ICustomer {
                                     break;
                                 }
                             } catch (NumberFormatException e) {
-                                e.printStackTrace();
+                                System.out.println("Input invalid");
                             }
                         }
                         customers.get(positionEdit).setCustomerType(typeCustomerEdit);
@@ -228,7 +259,7 @@ public class CustomerService implements ICustomer {
                     case 9:
                         String addressCustomerEdit;
                         do {
-                            System.out.println("Enter address pf customers");
+                            System.out.println("Enter address of Customers, ex: Đà Nẵng");
                             try {
                                 addressCustomerEdit = scan.nextLine();
                                 if (!Location.checkLocationObject(addressCustomerEdit)) {
@@ -236,7 +267,7 @@ public class CustomerService implements ICustomer {
                                 }
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         customers.get(positionEdit).setAddressCustomer(addressCustomerEdit);
@@ -279,17 +310,36 @@ public class CustomerService implements ICustomer {
             System.out.println("Enter name of Customers");
             try {
                 nameCustomer = scan.nextLine();
-                if (nameCustomer.matches("^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$")) {
+                if (!nameCustomer.matches(NAME_CUSTOMER)) {
                     throw new CheckException("Input invalid");
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
-        String dayOfBirth = scan.nextLine();
-        CheckDayOfBirth.checkDayOfBirth(dayOfBirth);
+        String dayOfBirth;
+        do {
+            System.out.println("Enter day of birth employee");
+            try {
+                dayOfBirth= scan.nextLine();
+                if (Integer.parseInt(dayOfBirth.substring(6)) > 2014) {
+                    throw new CheckException("Year old must be >18");
+                }
+                if (Integer.parseInt(dayOfBirth.substring(6)) < 1922) {
+                    throw new CheckException("Year old mus be <100");
+                }
+                if (!dayOfBirth.matches(DAY_OF_BIRTH)) {
+                    throw new CheckException("Input invalid");
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Day of birth must be a number");
+            } catch (CheckException | StringIndexOutOfBoundsException e) {
+                System.out.println("Input invalid and string index of bound");
+            }
+        } while (true);
 
         String gender;
         do {
@@ -315,7 +365,7 @@ public class CustomerService implements ICustomer {
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
@@ -329,7 +379,7 @@ public class CustomerService implements ICustomer {
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
@@ -344,7 +394,7 @@ public class CustomerService implements ICustomer {
 
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
@@ -358,9 +408,12 @@ public class CustomerService implements ICustomer {
                         throw new CheckException("The id has been matched");
                     }
                 }
+                if (!customerId.matches("\\S+")) {
+                    throw new CheckException("Input invalid");
+                }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
@@ -411,21 +464,21 @@ public class CustomerService implements ICustomer {
                     break;
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                System.out.println("Input invalid");
             }
         }
 
         String addressCustomers;
         do {
-            System.out.println("Enter address of Customers");
+            System.out.println("Enter address of Customers, ex: Đà Nẵng");
             try {
                 addressCustomers = scan.nextLine();
-                if (!Level.checkLevelObject(addressCustomers)) {
+                if (!Location.checkLocationObject(addressCustomers)) {
                     throw new CheckException("Input invalid");
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 

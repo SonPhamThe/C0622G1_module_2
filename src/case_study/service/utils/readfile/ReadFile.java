@@ -20,6 +20,7 @@ public class ReadFile {
             }
             bufferReader.close();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         return strings;

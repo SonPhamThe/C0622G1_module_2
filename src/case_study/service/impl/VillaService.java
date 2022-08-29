@@ -4,7 +4,7 @@ import case_study.model.furama_resort.VillaFurama;
 import case_study.service.exception.CheckException;
 import case_study.service.exception.check_input.CheckInputToData;
 import case_study.service.exception.check_number_of_floor.CheckNumberOfFloor;
-import case_study.service.validate.facility.check_nameservice.CheckNameServiceVilla;
+import case_study.service.utils.validate.facility.check_nameservice.CheckNameServiceVilla;
 
 import java.io.IOException;
 import java.util.Scanner;

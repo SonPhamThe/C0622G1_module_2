@@ -3,12 +3,13 @@ package case_study.service.impl;
 import case_study.model.employee.Employee;
 import case_study.service.IEmployee;
 import case_study.service.exception.CheckException;
-import case_study.service.exception.check_day_of_birth.CheckDayOfBirth;
+import case_study.service.utils.my_date.MyCheckDate;
+import case_study.service.utils.my_date.MyDate;
 import case_study.service.utils.readfile.ReadFileEmployee;
 import case_study.service.utils.writefile.WriteFileEmployee;
-import case_study.service.validate.employee.CmndPerson;
-import case_study.service.validate.employee.Mail;
-import case_study.service.validate.employee.NumberOfPhone;
+import case_study.service.utils.validate.employee.CmndPerson;
+import case_study.service.utils.validate.employee.Mail;
+import case_study.service.utils.validate.employee.NumberOfPhone;
 import demo_haitt.demo_exercise1.service.Exception.numberformatexception.InfoException;
 
 import java.io.IOException;
@@ -19,11 +20,10 @@ import java.util.Scanner;
 public class EmployeeService implements IEmployee {
     private static final Scanner scan = new Scanner(System.in);
     private static List<Employee> employees = new ArrayList<>();
-
     private static final String pathEmployee = "src/case_study/data/employee.csv";
+    private static final String NAME_PERSON = "^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$";
 
     private static final String DAY_OF_BIRTH = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
-
 //    static {
 //        employees.add(new Employee("Son", "12/04/1999", "male", "123456789123", "12345678912", "aujhagag@gmail.com", "1a", "one", "USA", 1267517651));
 //        employees.add(new Employee("Vinh", "13/05/1999", "female", "123456789145", "12345678923", "aujhagag@gmail.com", "2a", "two", "English", 126751742));
@@ -66,7 +66,7 @@ public class EmployeeService implements IEmployee {
         if (employee == null) {
             System.out.println("No have id in list employee");
         } else {
-            int chooseEdit;
+            int chooseEdit = 0;
             do {
                 System.out.println("--------------------------");
                 System.out.println("Employee need edit" +
@@ -85,7 +85,7 @@ public class EmployeeService implements IEmployee {
                 try {
                     chooseEdit = Integer.parseInt(scan.nextLine());
                 } catch (NumberFormatException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Input invalid");
                 }
                 switch (chooseEdit) {
                     case 1:
@@ -94,7 +94,7 @@ public class EmployeeService implements IEmployee {
                             System.out.println("Enter name of Employee");
                             try {
                                 nameEmployeeEdit = scan.nextLine();
-                                if (!nameEmployeeEdit.matches("^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$")) {
+                                if (!nameEmployeeEdit.matches(NAME_PERSON)) {
                                     throw new CheckException("Input invalid");
                                 }
                                 break;
@@ -106,8 +106,27 @@ public class EmployeeService implements IEmployee {
                         System.out.println("Success Edit");
                         break;
                     case 2:
-                        String dayOfBirthEdit = scan.nextLine();
-                        CheckDayOfBirth.checkDayOfBirth(dayOfBirthEdit);
+                        String dayOfBirthEdit;
+                        do {
+                            System.out.println("Enter day of birth edit to employee");
+                            try {
+                                dayOfBirthEdit = scan.nextLine();
+                                if (Integer.parseInt(dayOfBirthEdit.substring(6)) > 2014) {
+                                    throw new CheckException("Year old must be >18");
+                                }
+                                if (Integer.parseInt(dayOfBirthEdit.substring(6)) < 1922) {
+                                    throw new CheckException("Year old mus be <100");
+                                }
+                                if (!dayOfBirthEdit.matches(DAY_OF_BIRTH)) {
+                                    throw new CheckException("Input invalid");
+                                }
+                                break;
+                            } catch (NumberFormatException e) {
+                                System.out.println("Day of birth must be a number");
+                            } catch (CheckException | StringIndexOutOfBoundsException e) {
+                                System.out.println("Input invalid and string index of bound");
+                            }
+                        } while (true);
                         employees.get(positionEdit).setDayOfBirth(dayOfBirthEdit);
                         System.out.println("Success Edit");
                         break;
@@ -139,7 +158,7 @@ public class EmployeeService implements IEmployee {
                                 }
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         employees.get(positionEdit).setCMND(cmndEdit);
@@ -156,7 +175,7 @@ public class EmployeeService implements IEmployee {
                                 }
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         employees.get(positionEdit).setNumberOfPhone(numberOfPhone);
@@ -174,15 +193,27 @@ public class EmployeeService implements IEmployee {
 
                                 break;
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         employees.get(positionEdit).setEmail(emailEdit);
                         System.out.println("Success Edit");
                         break;
                     case 7:
-                        System.out.println("Enter id of Employee want to edit");
-                        String idEdit = scan.nextLine();
+                        String idEdit;
+                        do {
+                            System.out.println("Enter id of Employee want to edit");
+                            try {
+                                idEdit = scan.nextLine();
+                                if (!idEdit.matches("\\S*")) {
+                                    throw new CheckException("Input invalid");
+                                }
+
+                                break;
+                            } catch (CheckException e) {
+                                System.out.println("Input invalid");
+                            }
+                        } while (true);
                         employees.get(positionEdit).setEmployeeId(idEdit);
                         System.out.println("Success Edit");
                         break;
@@ -227,7 +258,7 @@ public class EmployeeService implements IEmployee {
                                     break;
                                 }
                             } catch (NumberFormatException e) {
-                                e.printStackTrace();
+                                System.out.println("Input invalid");
                             }
                         }
                         employees.get(positionEdit).setLevel(levelEdit);
@@ -284,7 +315,7 @@ public class EmployeeService implements IEmployee {
                                     break;
                                 }
                             } catch (NumberFormatException e) {
-                                e.printStackTrace();
+                                System.out.println("Input invalid");
                             }
                         }
                         employees.get(positionEdit).setLocation(locationEdit);
@@ -303,7 +334,7 @@ public class EmployeeService implements IEmployee {
                             } catch (NumberFormatException e) {
                                 System.out.println("Score must be a number");
                             } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                System.out.println("Input invalid");
                             }
                         } while (true);
                         employees.get(positionEdit).setWage(wageEdit);
@@ -339,8 +370,6 @@ public class EmployeeService implements IEmployee {
     }
 
     public Employee infoEmployee() throws IOException {
-        employees = ReadFileEmployee.readEmployeeFile(pathEmployee);
-
         String nameEmployee;
         do {
             System.out.println("Enter name of Employees");
@@ -351,23 +380,13 @@ public class EmployeeService implements IEmployee {
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
-        String dayOfBirth;
-        do {
-            try {
-                System.out.print("Enter day of birth employees: ");
-                dayOfBirth = scan.nextLine();
-                if (!dayOfBirth.matches(DAY_OF_BIRTH)) {
-                    throw new CheckException("Invalid input data");
-                }
-                break;
-            } catch (CheckException e) {
-                System.out.println(e.getMessage());
-            }
-        } while (true);
+        System.out.println("Enter day of birth employee");
+        MyDate dayOfBirth = MyCheckDate.getDateInfo(18, 100);
+        dayOfBirth.getStrDate();
 
         String gender;
         do {
@@ -393,7 +412,7 @@ public class EmployeeService implements IEmployee {
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
@@ -407,7 +426,7 @@ public class EmployeeService implements IEmployee {
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
@@ -422,23 +441,26 @@ public class EmployeeService implements IEmployee {
 
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
-        String employeeId;
+        String idEmployee;
         do {
-            System.out.println("Enter id of employees");
+            System.out.println("Enter id of Employee want to add");
             try {
-                employeeId = scan.nextLine();
+                idEmployee = scan.nextLine();
+                if (!idEmployee.matches("\\S*")) {
+                    throw new CheckException("Input invalid");
+                }
                 for (Employee employee : employees) {
-                    if (employee.getEmployeeId().equals(employeeId)) {
+                    if (employee.getEmployeeId().equals(idEmployee)) {
                         throw new CheckException("The id has been matched");
                     }
                 }
                 break;
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
@@ -482,7 +504,7 @@ public class EmployeeService implements IEmployee {
                     break;
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                System.out.println("Input invalid");
             }
         }
 
@@ -536,14 +558,14 @@ public class EmployeeService implements IEmployee {
                     break;
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                System.out.println("Input invalid");
             }
         }
 
         double wage;
         do {
-            System.out.println("Enter wage of Employees");
             try {
+                System.out.println("Enter wage of employees");
                 wage = Double.parseDouble(scan.nextLine());
                 if (wage < 0) {
                     throw new CheckException("Id must be >0");
@@ -552,13 +574,13 @@ public class EmployeeService implements IEmployee {
             } catch (NumberFormatException e) {
                 System.out.println("Score must be a number");
             } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Input invalid");
             }
         } while (true);
 
-        WriteFileEmployee.writeStudentFile(pathEmployee, employees);
+        return new
 
-        return new Employee(nameEmployee, dayOfBirth, gender, CMND, numberOfPhone, email, employeeId, level, location, wage);
+                Employee(nameEmployee, dayOfBirth.getStrDate(), gender, CMND, numberOfPhone, email, idEmployee, level, location, wage);
         //    String nameEmployee, String dayOfBirth, String gender, long CMND, long numberOfPhone,
         //    String email, String employeeId, String level, String location, double wage
     }

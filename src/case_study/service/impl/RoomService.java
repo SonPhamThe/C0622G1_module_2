@@ -3,7 +3,7 @@ package case_study.service.impl;
 import case_study.model.furama_resort.RoomFurama;
 import case_study.service.exception.CheckException;
 import case_study.service.exception.check_input.CheckInputToData;
-import case_study.service.validate.facility.check_nameservice.CheckNameServiceRoom;
+import case_study.service.utils.validate.facility.check_nameservice.CheckNameServiceRoom;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -26,7 +26,7 @@ public class RoomService {
         }
 
         System.out.println("Enter usable Area of Facility");
-        double usableArea = Double.parseDouble(scan.nextLine());
+        double usableArea = 0;
         CheckInputToData.checkInputToDouble(usableArea);
 
         System.out.println("Enter rental Cost of Facility");
@@ -58,7 +58,6 @@ public class RoomService {
                     break;
                 default:
                     System.out.println("Your selection is not suitable, selections from 1 to 4");
-                    check = true;
                     break;
             }
             if (check) {
@@ -66,7 +65,7 @@ public class RoomService {
             }
         } while (true);
 
-        String freeServiceIncluded;
+        String freeServiceIncluded = "";
         try {
             System.out.println("Enter free Service include");
             freeServiceIncluded = scan.nextLine();
@@ -74,7 +73,7 @@ public class RoomService {
                 throw new CheckException("Input invalid");
             }
         } catch (CheckException e) {
-            throw new RuntimeException(e);
+            System.out.println("Input invalid");
         }
         return new RoomFurama(nameService, usableArea, rentalCost, maxNumberOfPeople, rentalType, freeServiceIncluded);
     }

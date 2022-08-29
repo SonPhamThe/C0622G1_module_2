@@ -3,7 +3,7 @@ package case_study.service.impl;
 import case_study.model.furama_resort.HouseFurama;
 import case_study.service.exception.CheckException;
 import case_study.service.exception.check_input.CheckInputToData;
-import case_study.service.validate.facility.check_nameservice.CheckNameServiceHouse;
+import case_study.service.utils.validate.facility.check_nameservice.CheckNameServiceHouse;
 
 import java.io.IOException;
 import java.util.Scanner;
