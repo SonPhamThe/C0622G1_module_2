@@ -22,8 +22,6 @@ public class RoomFurama extends Facility {
 
     @Override
     public String toString() {
-        return super.toString() +
-                "freeServiceIncluded='" + freeServiceIncluded + '\'' +
-                '}';
+        return String.format("%s,%s", super.toString(), freeServiceIncluded);
     }
 }

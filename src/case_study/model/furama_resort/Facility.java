@@ -60,12 +60,6 @@ public abstract class Facility {
 
     @Override
     public String toString() {
-        return "FuramaModel{" +
-                "nameService='" + nameService + '\'' +
-                ", usableArea=" + usableArea +
-                ", rentalCost=" + rentalCost +
-                ", maxNumberOfPeople=" + maxNumberOfPeople +
-                ", rentalType='" + rentalType + '\'' +
-                '}';
+        return String.format("%s,%s,%s,%s,%s", nameService, usableArea, rentalCost, maxNumberOfPeople, rentalType);
     }
 }

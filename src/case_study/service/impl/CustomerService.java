@@ -3,9 +3,12 @@ package case_study.service.impl;
 import case_study.model.customer.Customer;
 import case_study.service.ICustomer;
 import case_study.service.exception.CheckException;
+import case_study.service.exception.check_day_of_birth.CheckDayOfBirth;
+import case_study.service.utils.readfile.ReadFileCustomers;
+import case_study.service.utils.writefile.WriteFileCustomer;
 import case_study.service.validate.employee.*;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,18 +17,23 @@ public class CustomerService implements ICustomer {
     private static final Scanner scan = new Scanner(System.in);
     private static final List<Customer> customers = new LinkedList<>();
 
+    private static final String PATH_CUSTOMER = "src/case_study/data/customer.csv";
+
     private static final String DAY_OF_BIRTH = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
 
     @Override
-    public void addCustomer() {
+    public void addCustomer() throws IOException {
+        ReadFileCustomers.readCustomerFile(PATH_CUSTOMER);
         Customer customer = infoCustomer();
         customers.add(customer);
         System.out.println("Success add");
+        WriteFileCustomer.writeStudentFile(PATH_CUSTOMER, customers);
     }
 
     @Override
     public void displayCustomer() {
+        ReadFileCustomers.readCustomerFile(PATH_CUSTOMER);
         if (customers.size() == 0) {
             System.out.println("List the customer is empty");
         }
@@ -35,7 +43,8 @@ public class CustomerService implements ICustomer {
     }
 
     @Override
-    public void editCustomer() {
+    public void editCustomer() throws IOException {
+        ReadFileCustomers.readCustomerFile(PATH_CUSTOMER);
         Customer customer = this.findCustomer();
 
         int positionEdit = customers.indexOf(customer);
@@ -70,7 +79,7 @@ public class CustomerService implements ICustomer {
                             System.out.println("Enter name of Customer");
                             try {
                                 nameCustomerEdit = scan.nextLine();
-                                if (!NamePerson.checkNameObject(nameCustomerEdit)) {
+                                if (!nameCustomerEdit.matches("^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$")) {
                                     throw new CheckException("Input invalid");
                                 }
                                 break;
@@ -82,19 +91,8 @@ public class CustomerService implements ICustomer {
                         System.out.println("Success Edit");
                         break;
                     case 2:
-                        String dayOfBirthEdit;
-                        do {
-                            try {
-                                System.out.print("Enter day of birth customers: ");
-                                dayOfBirthEdit = scan.nextLine();
-                                if (dayOfBirthEdit.matches(DAY_OF_BIRTH)) {
-                                    throw new CheckException("Invalid input data");
-                                }
-                                break;
-                            } catch (CheckException e) {
-                                System.out.println(e.getMessage());
-                            }
-                        } while (true);
+                        String dayOfBirthEdit = scan.nextLine();
+                        CheckDayOfBirth.checkDayOfBirth(dayOfBirthEdit);
                         customers.get(positionEdit).setDayOfBirth(dayOfBirthEdit);
                         System.out.println("Success Edit");
                         break;
@@ -135,7 +133,7 @@ public class CustomerService implements ICustomer {
                     case 5:
                         String numberOfPhone;
                         do {
-                            System.out.println("Enter number of phone customers");
+                            System.out.println("Enter number of phone customers, EX: 84-XXXXXXXXX");
                             try {
                                 numberOfPhone = scan.nextLine();
                                 if (!NumberOfPhone.checkNumberOf(numberOfPhone)) {
@@ -174,19 +172,56 @@ public class CustomerService implements ICustomer {
                         System.out.println("Success Edit");
                         break;
                     case 8:
-                        String typeCustomerEdit;
-                        do {
-                            System.out.println("Enter type of Customers");
+                        String typeCustomerEdit = "";
+                        while (true) {
                             try {
-                                typeCustomerEdit = scan.nextLine();
-                                if (!Level.checkLevelObject(typeCustomerEdit)) {
-                                    throw new CheckException("Input invalid");
+                                boolean check = false;
+                                System.out.println("Enter select option to edit" +
+                                        "\n 1. Diamond" +
+                                        "\n 2. Plat" +
+                                        "\n 3. Gold" +
+                                        "\n 4. Silver" +
+                                        "\n 5. Member" +
+                                        "\n 6. Exit");
+                                int choice = Integer.parseInt(scan.nextLine());
+                                switch (choice) {
+                                    case 1:
+                                        typeCustomerEdit = "Diamond";
+                                        check = true;
+                                        break;
+                                    case 2:
+                                        typeCustomerEdit = "Plat";
+                                        check = true;
+                                        break;
+                                    case 3:
+                                        typeCustomerEdit = "Gold";
+                                        check = true;
+                                        break;
+                                    case 4:
+                                        typeCustomerEdit = "Silver";
+                                        check = true;
+                                        break;
+                                    case 5:
+                                        typeCustomerEdit = "Member";
+                                        check = true;
+                                        break;
+
+                                    case 6:
+                                        System.exit(0);
+                                        break;
+                                    default:
+                                        System.out.println("Your selection is not suitable, selection from 1 to 6");
+                                        check = true;
+                                        break;
+
                                 }
-                                break;
-                            } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                if (check) {
+                                    break;
+                                }
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
                             }
-                        } while (true);
+                        }
                         customers.get(positionEdit).setCustomerType(typeCustomerEdit);
                         System.out.println("Success Edit");
                         break;
@@ -219,9 +254,11 @@ public class CustomerService implements ICustomer {
                 break;
             } while (true);
         }
+        WriteFileCustomer.writeStudentFile(PATH_CUSTOMER, customers);
     }
 
-    public Customer findCustomer() {
+    public Customer findCustomer() throws IOException {
+        ReadFileCustomers.readCustomerFile(PATH_CUSTOMER);
         System.out.println("Enter id of Customer you want to find");
         String id = scan.nextLine();
         for (Customer customer : customers) {
@@ -229,18 +266,20 @@ public class CustomerService implements ICustomer {
                 return customer;
             }
         }
+        WriteFileCustomer.writeStudentFile(PATH_CUSTOMER, customers);
         return null;
     }
 
     //    String nameEmployee, String dayOfBirth, String gender, String CMND, String numberOfPhone,
 //    String email, String customerId, String customerType, String addressCustomer
-    public static Customer infoCustomer() {
+    public static Customer infoCustomer() throws IOException {
+        ReadFileCustomers.readCustomerFile(PATH_CUSTOMER);
         String nameCustomer = "";
         do {
             System.out.println("Enter name of Customers");
             try {
                 nameCustomer = scan.nextLine();
-                if (!NamePerson.checkNameObject(nameCustomer)) {
+                if (nameCustomer.matches("^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$")) {
                     throw new CheckException("Input invalid");
                 }
                 break;
@@ -249,19 +288,8 @@ public class CustomerService implements ICustomer {
             }
         } while (true);
 
-        String dayOfBirth;
-        do {
-            try {
-                System.out.print("Enter day of birth customers: ");
-                dayOfBirth = scan.nextLine();
-                if (!dayOfBirth.matches(DAY_OF_BIRTH)) {
-                    throw new CheckException("Invalid input data");
-                }
-                break;
-            } catch (CheckException e) {
-                System.out.println(e.getMessage());
-            }
-        } while (true);
+        String dayOfBirth = scan.nextLine();
+        CheckDayOfBirth.checkDayOfBirth(dayOfBirth);
 
         String gender;
         do {
@@ -293,7 +321,7 @@ public class CustomerService implements ICustomer {
 
         String numberOfPhone;
         do {
-            System.out.println("Enter number of phone customers");
+            System.out.println("Enter number of phone customers. EX: 84-XXXXXXXXX");
             try {
                 numberOfPhone = scan.nextLine();
                 if (!NumberOfPhone.checkNumberOf(numberOfPhone)) {
@@ -336,19 +364,56 @@ public class CustomerService implements ICustomer {
             }
         } while (true);
 
-        String typeCustomer;
-        do {
-            System.out.println("Enter type of Customers");
+        String typeCustomer = "";
+        while (true) {
             try {
-                typeCustomer = scan.nextLine();
-                if (!Level.checkLevelObject(typeCustomer)) {
-                    throw new CheckException("Input invalid");
+                boolean check = false;
+                System.out.println("Enter select option to menu" +
+                        "\n 1. Diamond" +
+                        "\n 2. Plat" +
+                        "\n 3. Gold" +
+                        "\n 4. Silver" +
+                        "\n 5. Member" +
+                        "\n 6. Exit");
+                int choice = Integer.parseInt(scan.nextLine());
+                switch (choice) {
+                    case 1:
+                        typeCustomer = "Diamond";
+                        check = true;
+                        break;
+                    case 2:
+                        typeCustomer = "Plat";
+                        check = true;
+                        break;
+                    case 3:
+                        typeCustomer = "Gold";
+                        check = true;
+                        break;
+                    case 4:
+                        typeCustomer = "Silver";
+                        check = true;
+                        break;
+                    case 5:
+                        typeCustomer = "Member";
+                        check = true;
+                        break;
+
+                    case 6:
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Your selection is not suitable, selection from 1 to 6");
+                        check = true;
+                        break;
+
                 }
-                break;
-            } catch (CheckException e) {
-                System.out.println(e.getMessage());
+                if (check) {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
-        } while (true);
+        }
 
         String addressCustomers;
         do {
@@ -363,6 +428,8 @@ public class CustomerService implements ICustomer {
                 System.out.println(e.getMessage());
             }
         } while (true);
+
+        WriteFileCustomer.writeStudentFile(PATH_CUSTOMER, customers);
 
         return new Customer(nameCustomer, dayOfBirth, gender, CMND, numberOfPhone, email, customerId, typeCustomer, addressCustomers);
     }

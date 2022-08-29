@@ -5,18 +5,18 @@ public class Booking {
     private int dayStart;
     private int dayEnd;
     private String customerBookingId;
-    private String nameService;
+    private String nameServiceBooking;
     private String typeService;
 
     public Booking() {
     }
 
-    public Booking(String bookingId, int dayStart, int dayEnd, String customerBookingId, String nameService, String typeService) {
+    public Booking(String bookingId, int dayStart, int dayEnd, String customerBookingId, String nameServiceBooking, String typeService) {
         this.bookingId = bookingId;
         this.dayStart = dayStart;
         this.dayEnd = dayEnd;
         this.customerBookingId = customerBookingId;
-        this.nameService = nameService;
+        this.nameServiceBooking = nameServiceBooking;
         this.typeService = typeService;
     }
 
@@ -52,12 +52,12 @@ public class Booking {
         this.customerBookingId = customerBookingId;
     }
 
-    public String getNameService() {
-        return nameService;
+    public String getNameServiceBooking() {
+        return nameServiceBooking;
     }
 
-    public void setNameService(String nameService) {
-        this.nameService = nameService;
+    public void setNameServiceBooking(String nameServiceBooking) {
+        this.nameServiceBooking = nameServiceBooking;
     }
 
     public String getTypeService() {
@@ -70,13 +70,6 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" +
-                "bookingId='" + bookingId + '\'' +
-                ", dayStart=" + dayStart +
-                ", dayEnd=" + dayEnd +
-                ", customerBookingId='" + customerBookingId + '\'' +
-                ", nameService='" + nameService + '\'' +
-                ", typeService='" + typeService + '\'' +
-                '}';
+        return String.format("%s,%s,%s,%s,%s,%s", bookingId, dayStart, dayEnd, customerBookingId, nameServiceBooking, typeService);
     }
 }

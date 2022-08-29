@@ -60,12 +60,6 @@ public class Contract {
 
     @Override
     public String toString() {
-        return "Contract{" +
-                "numberContract=" + numberContract +
-                ", bookingId='" + bookingId + '\'' +
-                ", advanceDepositAmount=" + advanceDepositAmount +
-                ", totalPaymentAmount=" + totalPaymentAmount +
-                ", contractId='" + contractId + '\'' +
-                '}';
+        return String.format("%s,%s,%s,%s,%s",numberContract,bookingId,advanceDepositAmount,totalPaymentAmount,contractId);
     }
 }

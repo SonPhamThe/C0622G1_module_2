@@ -1,8 +1,6 @@
 package case_study.service.utils.readfile;
 
-import case_study.model.customer.Customer;
 import case_study.model.employee.Employee;
-import demo_haitt.demo_exercise1.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;

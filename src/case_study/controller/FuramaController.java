@@ -12,44 +12,35 @@ import java.util.Scanner;
 
 public class FuramaController {
     private static final Scanner scan = new Scanner(System.in);
-
     private static final IFacility facility = new FacilityService();
     private static final IEmployee employee = new EmployeeService();
-
-
     private static final ICustomer customer = new CustomerService();
 
     public void menuUser() throws IOException {
         while (true) {
             System.out.println("---------------Welcome to Furama resort----------");
             System.out.println("---------------Please select the services below----------");
-            System.out.println("1. Employee Management" +
-                    "\n 2. Customer Management" +
-                    "\n 3. Facility Management" +
-                    "\n 4. Facility Management" +
-                    "\n 5. Booking Management" +
-                    "\n 6. Promotion Management" +
-                    "\n 7. Exit");
-            int choice;
-            try {
-                choice = Integer.parseInt(scan.nextLine());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            System.out.println("1. Employee Management" + "\n 2. Customer Management" + "\n 3. Facility Management" + "\n 4. Facility Management" + "\n 5. Booking Management" + "\n 6. Promotion Management" + "\n 7. Exit");
+            int choice = 0;
+            while (true) {
+                try {
+                    System.out.println("Please choice to option");
+                    choice = Integer.parseInt(scan.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Input invalid");
+                }
             }
             switch (choice) {
                 case 1:
                     while (true) {
                         System.out.println("---------------Please select the services below----------");
-                        System.out.println("1.1 Display list employees" +
-                                "\n 1.2 Add new employee" +
-                                "\n 1.3 Edit employee" +
-                                "\n 1.4 Return main menu" +
-                                "\n 1.5 Exit");
-                        int chooseEmployees;
+                        System.out.println("1.1 Display list employees" + "\n 1.2 Add new employee" + "\n 1.3 Edit employee" + "\n 1.4 Return main menu" + "\n 1.5 Exit");
+                        int chooseEmployees = 0;
                         try {
                             chooseEmployees = Integer.parseInt(scan.nextLine());
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Input invalid");
                         }
                         boolean check = false;
                         switch (chooseEmployees) {
@@ -79,14 +70,11 @@ public class FuramaController {
                             break;
                         }
                     }
+                    break;
                 case 2:
                     while (true) {
                         System.out.println("---------------Please select the services below----------");
-                        System.out.println("2.1 Display list customers" +
-                                "\n 2.2 Add new customer" +
-                                "\n 2.3 Edit customer" +
-                                "\n 2.4 Return main menu" +
-                                "\n 2.5 Exit");
+                        System.out.println("2.1 Display list customers" + "\n 2.2 Add new customer" + "\n 2.3 Edit customer" + "\n 2.4 Return main menu" + "\n 2.5 Exit");
                         int chooseCustomer;
                         try {
                             chooseCustomer = Integer.parseInt(scan.nextLine());
@@ -121,14 +109,11 @@ public class FuramaController {
                             break;
                         }
                     }
+                    break;
                 case 3:
                     while (true) {
                         System.out.println("---------------Please select the services below----------");
-                        System.out.println("3.1 Display list facility" +
-                                "\n 3.2 Add new facility" +
-                                "\n 3.3 Display list facility maintenance" +
-                                "\n 3.4 Return main menu" +
-                                "\n 3.5 Exit");
+                        System.out.println("3.1 Display list facility" + "\n 3.2 Add new facility" + "\n 3.3 Display list facility maintenance" + "\n 3.4 Return main menu" + "\n 3.5 Exit");
                         int chooseFacility;
                         try {
                             chooseFacility = Integer.parseInt(scan.nextLine());
@@ -138,6 +123,7 @@ public class FuramaController {
                         boolean check = false;
                         switch (chooseFacility) {
                             case 1:
+                                facility.displayFacility();
                                 check = true;
                                 break;
                             case 2:
@@ -161,15 +147,11 @@ public class FuramaController {
                             break;
                         }
                     }
+                    break;
                 case 4:
                     while (true) {
                         System.out.println("---------------Please select the services below----------");
-                        System.out.println("4.1 Add new booking" +
-                                "\n 4.2 Display list booking" +
-                                "\n 4.3 Create new contracts" +
-                                "\n 4.4 Display list contracts" +
-                                "\n 4.5 Edit contracts" +
-                                "\n 4.6 Return main menu");
+                        System.out.println("4.1 Add new booking" + "\n 4.2 Display list booking" + "\n 4.3 Create new contracts" + "\n 4.4 Display list contracts" + "\n 4.5 Edit contracts" + "\n 4.6 Return main menu");
                         int chooseBooking = 0;
                         try {
                             chooseBooking = Integer.parseInt(scan.nextLine());
@@ -207,13 +189,11 @@ public class FuramaController {
                             break;
                         }
                     }
+                    break;
                 case 5:
                     while (true) {
                         System.out.println("---------------Please select the services below----------");
-                        System.out.println("5.1 Display list customer use service" +
-                                "\n 5.2 Display list customers get voucher" +
-                                "\n 5.3 Return main menu" +
-                                "\n 5.4 Exit");
+                        System.out.println("5.1 Display list customer use service" + "\n 5.2 Display list customers get voucher" + "\n 5.3 Return main menu" + "\n 5.4 Exit");
                         int choosePromotion = 0;
                         try {
                             choosePromotion = Integer.parseInt(scan.nextLine());
@@ -242,11 +222,13 @@ public class FuramaController {
                             break;
                         }
                     }
+                    break;
                 case 6:
                     menuUser();
                     break;
                 default:
                     System.out.println("Your selection is not suitable, selections from 1 to 6");
+                    break;
             }
         }
     }

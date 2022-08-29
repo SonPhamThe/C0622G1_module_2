@@ -1,12 +1,14 @@
 package case_study.service.impl;
 
-import case_study.model.customer.Customer;
 import case_study.model.employee.Employee;
 import case_study.service.IEmployee;
 import case_study.service.exception.CheckException;
+import case_study.service.exception.check_day_of_birth.CheckDayOfBirth;
 import case_study.service.utils.readfile.ReadFileEmployee;
 import case_study.service.utils.writefile.WriteFileEmployee;
-import case_study.service.validate.employee.*;
+import case_study.service.validate.employee.CmndPerson;
+import case_study.service.validate.employee.Mail;
+import case_study.service.validate.employee.NumberOfPhone;
 import demo_haitt.demo_exercise1.service.Exception.numberformatexception.InfoException;
 
 import java.io.IOException;
@@ -92,7 +94,7 @@ public class EmployeeService implements IEmployee {
                             System.out.println("Enter name of Employee");
                             try {
                                 nameEmployeeEdit = scan.nextLine();
-                                if (!NamePerson.checkNameObject(nameEmployeeEdit)) {
+                                if (!nameEmployeeEdit.matches("^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$")) {
                                     throw new CheckException("Input invalid");
                                 }
                                 break;
@@ -100,35 +102,12 @@ public class EmployeeService implements IEmployee {
                                 System.out.println(e.getMessage());
                             }
                         } while (true);
-//                        employees.get(positionEdit).setNameEmployee(nameEmployeeEdit);
+                        employees.get(positionEdit).setEmployeeId(nameEmployeeEdit);
                         System.out.println("Success Edit");
                         break;
                     case 2:
-                        String dayOfBirthEdit;
-                        do {
-                            try {
-                                System.out.print("Enter day of birth employees: ");
-                                dayOfBirthEdit = scan.nextLine();
-                                if (!DayOfBirthPerson.checkDayOfBirth(dayOfBirthEdit)) {
-                                    throw new CheckException("Invalid input data");
-                                }
-                                if (Integer.parseInt(dayOfBirthEdit.substring(0, 1).concat(dayOfBirthEdit.substring(1, 2))) > 31) {
-                                    throw new CheckException("Invalid input data");
-                                }
-                                if (Integer.parseInt(dayOfBirthEdit.substring(3, 4).concat(dayOfBirthEdit.substring(4, 5))) > 12) {
-                                    throw new CheckException("Invalid input data");
-                                }
-                                if (!checkDayMonthYearEmployee(dayOfBirthEdit)) {
-                                    throw new CheckException("Invalid input data");
-                                }
-                                if (Integer.parseInt(dayOfBirthEdit.substring(6)) > 2015) {
-                                    throw new CheckException("Invalid input data");
-                                }
-                                break;
-                            } catch (CheckException e) {
-                                System.out.println(e.getMessage());
-                            }
-                        } while (true);
+                        String dayOfBirthEdit = scan.nextLine();
+                        CheckDayOfBirth.checkDayOfBirth(dayOfBirthEdit);
                         employees.get(positionEdit).setDayOfBirth(dayOfBirthEdit);
                         System.out.println("Success Edit");
                         break;
@@ -208,38 +187,106 @@ public class EmployeeService implements IEmployee {
                         System.out.println("Success Edit");
                         break;
                     case 8:
-                        String levelEdit;
-                        do {
-                            System.out.println("Enter level of Employees");
+                        String levelEdit = "";
+                        while (true) {
                             try {
-                                levelEdit = scan.nextLine();
-                                String str;
-                                if (!Level.checkLevelObject(levelEdit)) {
-                                    throw new CheckException("Input invalid");
+                                boolean check = false;
+                                System.out.println("Enter select option to edit" +
+                                        "\n 1. Intermediate" +
+                                        "\n 2. College" +
+                                        "\n 3. University" +
+                                        "\n 4. After university" +
+                                        "\n 5. Return");
+                                int choice = Integer.parseInt(scan.nextLine());
+                                switch (choice) {
+                                    case 1:
+                                        levelEdit = "Intermediate";
+                                        check = true;
+                                        break;
+                                    case 2:
+                                        levelEdit = "College";
+                                        check = true;
+                                        break;
+                                    case 3:
+                                        levelEdit = "University";
+                                        check = true;
+                                        break;
+                                    case 4:
+                                        levelEdit = "After university";
+                                        check = true;
+                                        break;
+                                    case 5:
+                                        infoEmployee();
+                                        break;
+                                    default:
+                                        System.out.println("Your selection is not suitable, selection from 1 to 5");
+                                        break;
+
                                 }
-                                break;
-                            } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                if (check) {
+                                    break;
+                                }
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
                             }
-                        } while (true);
+                        }
                         employees.get(positionEdit).setLevel(levelEdit);
                         System.out.println("Success Edit");
                         break;
                     case 9:
-                        String locationEdit;
-                        do {
-                            System.out.println("Enter location of Employees");
+                        String locationEdit = " ";
+                        while (true) {
                             try {
-                                locationEdit = scan.nextLine();
-                                String str;
-                                if (!Location.checkLocationObject(locationEdit)) {
-                                    throw new CheckException("Input invalid");
+                                boolean check = false;
+                                System.out.println("Enter select option to edit" +
+                                        "\n 1. Receptionist" +
+                                        "\n 2. Service" +
+                                        "\n 3. Expert" +
+                                        "\n 4. Monitoring" +
+                                        "\n 5. Manage" +
+                                        "\n 6. Manager" +
+                                        "\n 7. Return");
+                                int choice = Integer.parseInt(scan.nextLine());
+                                switch (choice) {
+                                    case 1:
+                                        locationEdit = "Receptionist";
+                                        check = true;
+                                        break;
+                                    case 2:
+                                        locationEdit = "Service";
+                                        check = true;
+                                        break;
+                                    case 3:
+                                        locationEdit = "Expert";
+                                        check = true;
+                                        break;
+                                    case 4:
+                                        locationEdit = "Monitoring";
+                                        check = true;
+                                        break;
+                                    case 5:
+                                        locationEdit = "Manage";
+                                        check = true;
+                                        break;
+                                    case 6:
+                                        locationEdit = "Manager";
+                                        check = true;
+                                        break;
+                                    case 7:
+                                        infoEmployee();
+                                        break;
+                                    default:
+                                        System.out.println("Your selection is not suitable, selection from 1 to 7");
+                                        break;
+
                                 }
-                                break;
-                            } catch (CheckException e) {
-                                System.out.println(e.getMessage());
+                                if (check) {
+                                    break;
+                                }
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
                             }
-                        } while (true);
+                        }
                         employees.get(positionEdit).setLocation(locationEdit);
                         System.out.println("Success Edit");
                         break;
@@ -400,34 +447,34 @@ public class EmployeeService implements IEmployee {
             try {
                 boolean check = false;
                 System.out.println("Enter select option to menu" +
-                        "\n 1. Trung cấp" +
-                        "\n 2. Cao đẳng" +
-                        "\n 3. Đại học" +
-                        "\n 4. sau đại học" +
-                        "\n 5. Quay lại");
+                        "\n 1. Intermediate" +
+                        "\n 2. College" +
+                        "\n 3. University" +
+                        "\n 4. After university" +
+                        "\n 5. Return");
                 int choice = Integer.parseInt(scan.nextLine());
                 switch (choice) {
                     case 1:
-                        level = "Trung cấp";
+                        level = "Intermediate";
                         check = true;
                         break;
                     case 2:
-                        level = "Cao đẳng";
+                        level = "College";
                         check = true;
                         break;
                     case 3:
-                        level = "Đại học";
+                        level = "University";
                         check = true;
                         break;
                     case 4:
-                        level = "sau đại học";
+                        level = "After university";
                         check = true;
                         break;
                     case 5:
                         infoEmployee();
                         break;
                     default:
-                        System.out.println("Chọn đúng vào");
+                        System.out.println("Your selection is not suitable, selection from 1 to 5");
                         break;
 
                 }
@@ -443,45 +490,45 @@ public class EmployeeService implements IEmployee {
         while (true) {
             try {
                 boolean check = false;
-                System.out.println("Vui lòng chọn một số lựa chọn sau" +
-                        "\n 1. Lễ tân" +
-                        "\n 2. Phục vụ" +
-                        "\n 3. Chuyên viên" +
-                        "\n 4. Giám sát" +
-                        "\n 5. Quản lý" +
-                        "\n 6. Giám đốc" +
-                        "\n 7. Quay lại");
+                System.out.println("Enter select option to menu" +
+                        "\n 1. Receptionist" +
+                        "\n 2. Service" +
+                        "\n 3. Expert" +
+                        "\n 4. Monitoring" +
+                        "\n 5. Manage" +
+                        "\n 6. Manager" +
+                        "\n 7. Return");
                 int choice = Integer.parseInt(scan.nextLine());
                 switch (choice) {
                     case 1:
-                        location = "Lễ tân";
+                        location = "Receptionist";
                         check = true;
                         break;
                     case 2:
-                        location = "Phục vụ";
+                        location = "Service";
                         check = true;
                         break;
                     case 3:
-                        location = "Chuyên viên";
+                        location = "Expert";
                         check = true;
                         break;
                     case 4:
-                        location = "Giám sát";
+                        location = "Monitoring";
                         check = true;
                         break;
                     case 5:
-                        location = "Quản lý";
+                        location = "Manage";
                         check = true;
                         break;
                     case 6:
-                        location = "Giám đốc";
+                        location = "Manager";
                         check = true;
                         break;
                     case 7:
                         infoEmployee();
                         break;
                     default:
-                        System.out.println("Chọn đúng vào");
+                        System.out.println("Your selection is not suitable, selection from 1 to 7");
                         break;
 
                 }
@@ -514,17 +561,5 @@ public class EmployeeService implements IEmployee {
         return new Employee(nameEmployee, dayOfBirth, gender, CMND, numberOfPhone, email, employeeId, level, location, wage);
         //    String nameEmployee, String dayOfBirth, String gender, long CMND, long numberOfPhone,
         //    String email, String employeeId, String level, String location, double wage
-    }
-
-    public static boolean checkDayMonthYearEmployee(String string) {
-        int[] day = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        int[] arr = new int[3];
-        arr[0] = Integer.parseInt(string.substring(0, 1).concat(string.substring(1, 2)));
-        arr[1] = Integer.parseInt(string.substring(3, 4).concat(string.substring(4, 5)));
-        arr[2] = Integer.parseInt(string.substring(6));
-        if (arr[2] % 4 == 0 && !(arr[2] % 100 == 0 && arr[2] % 400 != 0)) {
-            arr[0] = day[arr[1] - 1] + 1;
-        }
-        return (arr[0] <= day[arr[1] - 1]);
     }
 }

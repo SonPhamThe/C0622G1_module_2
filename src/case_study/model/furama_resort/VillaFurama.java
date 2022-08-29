@@ -44,10 +44,6 @@ public class VillaFurama extends Facility {
 
     @Override
     public String toString() {
-        return  super.toString()+
-                "roomStandard='" + roomStandard + '\'' +
-                ", swimmingOfArea=" + swimmingOfArea +
-                ", numberOfFloors=" + numberOfFloors +
-                '}';
+        return String.format("%s,%s,%s,%s", super.toString(), roomStandard, swimmingOfArea, numberOfFloors);
     }
 }
