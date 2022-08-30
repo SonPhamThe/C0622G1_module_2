@@ -1,9 +1,9 @@
 package case_study.model.booking;
 
 public class Booking {
-    private String bookingId;
-    private int dayStart;
-    private int dayEnd;
+    private int bookingId;
+    private String dayStart;
+    private String dayEnd;
     private String customerBookingId;
     private String nameServiceBooking;
     private String typeService;
@@ -11,7 +11,7 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(String bookingId, int dayStart, int dayEnd, String customerBookingId, String nameServiceBooking, String typeService) {
+    public Booking(int bookingId, String dayStart, String dayEnd, String customerBookingId, String nameServiceBooking, String typeService) {
         this.bookingId = bookingId;
         this.dayStart = dayStart;
         this.dayEnd = dayEnd;
@@ -20,27 +20,27 @@ public class Booking {
         this.typeService = typeService;
     }
 
-    public String getBookingId() {
+    public int getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(String bookingId) {
+    public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
     }
 
-    public int getDayStart() {
+    public String getDayStart() {
         return dayStart;
     }
 
-    public void setDayStart(int dayStart) {
+    public void setDayStart(String dayStart) {
         this.dayStart = dayStart;
     }
 
-    public int getDayEnd() {
+    public String getDayEnd() {
         return dayEnd;
     }
 
-    public void setDayEnd(int dayEnd) {
+    public void setDayEnd(String dayEnd) {
         this.dayEnd = dayEnd;
     }
 

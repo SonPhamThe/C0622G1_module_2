@@ -1,5 +1,6 @@
 package demo_haitt.demo_exercise1.service.util.write_readfile;
 
+import case_study.model.customer.Customer;
 import demo_haitt.demo_exercise1.model.Student;
 
 import java.io.BufferedWriter;
@@ -22,7 +23,7 @@ public class WriteFIle {
     public static void writeStudentFile(String path, List<Student> students) throws IOException {
         String data = "";
         for (Student student : students) {
-            data += student.toString()+"\n";
+            data += student.toString() + "\n";
         }
         WriteFIle.writeFile(path, data);
     }

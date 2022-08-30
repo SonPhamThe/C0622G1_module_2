@@ -7,4 +7,6 @@ public interface IFacility
     void addFacility() throws IOException;
 
     void displayFacility();
+
+    void displayFacilityMaintenance();
 }

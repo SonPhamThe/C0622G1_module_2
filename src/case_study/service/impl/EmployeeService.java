@@ -7,9 +7,10 @@ import case_study.service.utils.my_date.MyCheckDate;
 import case_study.service.utils.my_date.MyDate;
 import case_study.service.utils.readfile.ReadFileEmployee;
 import case_study.service.utils.writefile.WriteFileEmployee;
-import case_study.service.utils.validate.employee.CmndPerson;
-import case_study.service.utils.validate.employee.Mail;
-import case_study.service.utils.validate.employee.NumberOfPhone;
+import case_study.service.vahidate.IdCard;
+import case_study.service.vahidate.IdObject;
+import case_study.service.vahidate.Mail;
+import case_study.service.vahidate.NumberOfPhone;
 import demo_haitt.demo_exercise1.service.Exception.numberformatexception.InfoException;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.Scanner;
 public class EmployeeService implements IEmployee {
     private static final Scanner scan = new Scanner(System.in);
     private static List<Employee> employees = new ArrayList<>();
-    private static final String pathEmployee = "src/case_study/data/employee.csv";
+    private static final String PATH_EMPLOYEE = "src/case_study/data/employee.csv";
     private static final String NAME_PERSON = "^\\p{Lu}\\p{Ll}+(\\s\\p{Lu}\\p{Ll}+)*$";
 
     private static final String DAY_OF_BIRTH = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
@@ -33,18 +34,18 @@ public class EmployeeService implements IEmployee {
 
     @Override
     public void addEmployee() throws IOException {
-        employees = ReadFileEmployee.readEmployeeFile(pathEmployee);
+        employees = ReadFileEmployee.readEmployeeFile(PATH_EMPLOYEE);
         Employee employee = this.infoEmployee();
         employees.add(employee);
         System.out.println("Success add");
-        WriteFileEmployee.writeStudentFile(pathEmployee, employees);
+        WriteFileEmployee.writeEmployeeFile(PATH_EMPLOYEE, employees);
     }
 
     @Override
     public void displayEmployee() {
         System.out.println("-----------------List the Employee---------------");
 
-        employees = ReadFileEmployee.readEmployeeFile(pathEmployee);
+        employees = ReadFileEmployee.readEmployeeFile(PATH_EMPLOYEE);
 
         if (employees.size() == 0) {
             System.out.println("List the employee is empty");
@@ -58,7 +59,7 @@ public class EmployeeService implements IEmployee {
 
     @Override
     public void editEmployee() throws IOException {
-        employees = ReadFileEmployee.readEmployeeFile(pathEmployee);
+        employees = ReadFileEmployee.readEmployeeFile(PATH_EMPLOYEE);
         Employee employee = this.findEmployee();
 
         int positionEdit = employees.indexOf(employee);
@@ -73,7 +74,7 @@ public class EmployeeService implements IEmployee {
                         "\n 1. Name of Employee" +
                         "\n 2. Day of birth of employee" +
                         "\n 3. Gender of employee" +
-                        "\n 4. CMND of employee" +
+                        "\n 4. Id Card of employee" +
                         "\n 5. Name of phone employee" +
                         "\n 6. Email of employee" +
                         "\n 7. Id of employee" +
@@ -148,12 +149,12 @@ public class EmployeeService implements IEmployee {
                         System.out.println("Success Edit");
                         break;
                     case 4:
-                        String cmndEdit;
+                        String idCard;
                         do {
-                            System.out.println("Enter cmnd of Employees");
+                            System.out.println("Enter id Card of Employees");
                             try {
-                                cmndEdit = scan.nextLine();
-                                if (!CmndPerson.checkCmnd(cmndEdit)) {
+                                idCard = scan.nextLine();
+                                if (!IdCard.checkIdCard(idCard)) {
                                     throw new CheckException("Id mus be in the correct format");
                                 }
                                 break;
@@ -161,7 +162,7 @@ public class EmployeeService implements IEmployee {
                                 System.out.println("Input invalid");
                             }
                         } while (true);
-                        employees.get(positionEdit).setCMND(cmndEdit);
+                        employees.get(positionEdit).setIdCard(idCard);
                         System.out.println("Success Edit");
                         break;
                     case 5:
@@ -170,7 +171,7 @@ public class EmployeeService implements IEmployee {
                             System.out.println("Enter number of phone employees");
                             try {
                                 numberOfPhone = scan.nextLine();
-                                if (!NumberOfPhone.checkNumberOf(numberOfPhone)) {
+                                if (!NumberOfPhone.checkNumberOfPhone(numberOfPhone)) {
                                     throw new CheckException("Id must be in the correct format");
                                 }
                                 break;
@@ -187,7 +188,7 @@ public class EmployeeService implements IEmployee {
                             System.out.println("Enter email of employees");
                             try {
                                 emailEdit = scan.nextLine();
-                                if (!Mail.checkEmail(emailEdit)) {
+                                if (!Mail.checkMail(emailEdit)) {
                                     throw new CheckException("Input invalid");
                                 }
 
@@ -205,7 +206,7 @@ public class EmployeeService implements IEmployee {
                             System.out.println("Enter id of Employee want to edit");
                             try {
                                 idEdit = scan.nextLine();
-                                if (!idEdit.matches("\\S*")) {
+                                if (!IdObject.checkIdObject(idEdit)) {
                                     throw new CheckException("Input invalid");
                                 }
 
@@ -351,12 +352,12 @@ public class EmployeeService implements IEmployee {
                 }
                 break;
             } while (true);
-            WriteFileEmployee.writeStudentFile(pathEmployee, employees);
+            WriteFileEmployee.writeEmployeeFile(PATH_EMPLOYEE, employees);
         }
     }
 
     public Employee findEmployee() throws IOException {
-        employees = ReadFileEmployee.readEmployeeFile(pathEmployee);
+        employees = ReadFileEmployee.readEmployeeFile(PATH_EMPLOYEE);
         System.out.println("Enter id of Employee you want to find");
         String id = scan.nextLine();
         for (Employee employee : employees) {
@@ -364,12 +365,13 @@ public class EmployeeService implements IEmployee {
                 return employee;
             }
         }
-        WriteFileEmployee.writeStudentFile(pathEmployee, employees);
+        WriteFileEmployee.writeEmployeeFile(PATH_EMPLOYEE, employees);
 
         return null;
     }
 
     public Employee infoEmployee() throws IOException {
+        employees = ReadFileEmployee.readEmployeeFile(PATH_EMPLOYEE);
         String nameEmployee;
         do {
             System.out.println("Enter name of Employees");
@@ -402,12 +404,12 @@ public class EmployeeService implements IEmployee {
             }
         } while (true);
 
-        String CMND;
+        String idCard;
         do {
-            System.out.println("Enter cmnd of Employees");
+            System.out.println("Enter Id Card of Employees");
             try {
-                CMND = scan.nextLine();
-                if (!CmndPerson.checkCmnd(CMND)) {
+                idCard = scan.nextLine();
+                if (!IdCard.checkIdCard(idCard)) {
                     throw new CheckException("Id mus be in the correct format");
                 }
                 break;
@@ -418,10 +420,10 @@ public class EmployeeService implements IEmployee {
 
         String numberOfPhone;
         do {
-            System.out.println("Enter number of phone employees");
+            System.out.println("Enter number of phone employees, ex: 84-905814428");
             try {
                 numberOfPhone = scan.nextLine();
-                if (!NumberOfPhone.checkNumberOf(numberOfPhone)) {
+                if (!NumberOfPhone.checkNumberOfPhone(numberOfPhone)) {
                     throw new CheckException("Id must be in the correct format");
                 }
                 break;
@@ -435,7 +437,7 @@ public class EmployeeService implements IEmployee {
             System.out.println("Enter email of employees");
             try {
                 email = scan.nextLine();
-                if (!Mail.checkEmail(email)) {
+                if (!Mail.checkMail(email)) {
                     throw new CheckException("Input invalid");
                 }
 
@@ -450,7 +452,7 @@ public class EmployeeService implements IEmployee {
             System.out.println("Enter id of Employee want to add");
             try {
                 idEmployee = scan.nextLine();
-                if (!idEmployee.matches("\\S*")) {
+                if (!IdObject.checkIdObject(idEmployee)) {
                     throw new CheckException("Input invalid");
                 }
                 for (Employee employee : employees) {
@@ -567,7 +569,7 @@ public class EmployeeService implements IEmployee {
             try {
                 System.out.println("Enter wage of employees");
                 wage = Double.parseDouble(scan.nextLine());
-                if (wage < 0) {
+                if (wage < 100000) {
                     throw new CheckException("Id must be >0");
                 }
                 break;
@@ -578,9 +580,9 @@ public class EmployeeService implements IEmployee {
             }
         } while (true);
 
-        return new
+        WriteFileEmployee.writeEmployeeFile(PATH_EMPLOYEE, employees);
 
-                Employee(nameEmployee, dayOfBirth.getStrDate(), gender, CMND, numberOfPhone, email, idEmployee, level, location, wage);
+        return new Employee(nameEmployee, dayOfBirth.getStrDate(), gender, idCard, numberOfPhone, email, idEmployee, level, location, wage);
         //    String nameEmployee, String dayOfBirth, String gender, long CMND, long numberOfPhone,
         //    String email, String employeeId, String level, String location, double wage
     }

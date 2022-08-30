@@ -13,8 +13,8 @@ public class Customer extends Person {
         this.addressCustomer = addressCustomer;
     }
 
-    public Customer(String nameEmployee, String dayOfBirth, String gender, String CMND, String numberOfPhone, String email, String customerId, String customerType, String addressCustomer) {
-        super(nameEmployee, dayOfBirth, gender, CMND, numberOfPhone, email);
+    public Customer(String nameEmployee, String dayOfBirth, String gender, String idCard, String numberOfPhone, String email, String customerId, String customerType, String addressCustomer) {
+        super(nameEmployee, dayOfBirth, gender, idCard, numberOfPhone, email);
         this.customerId = customerId;
         this.customerType = customerType;
         this.addressCustomer = addressCustomer;
@@ -46,7 +46,7 @@ public class Customer extends Person {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s", customerId, customerType, addressCustomer, super.toString());
+        return String.format("%s,%s,%s,%s", super.toString(), customerId, customerType, addressCustomer);
 //        return "Customer{" +
 //                "customerId='" + customerId + '\'' +
 //                ", customerType='" + customerType + '\'' +

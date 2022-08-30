@@ -2,16 +2,13 @@ package case_study.service.impl;
 
 import case_study.model.furama_resort.HouseFurama;
 import case_study.service.exception.CheckException;
-import case_study.service.exception.check_input.CheckInputToData;
 import case_study.service.utils.validate.facility.check_nameservice.CheckNameServiceHouse;
-
-import java.io.IOException;
 import java.util.Scanner;
 
 public class HouseService {
     private static final Scanner scan = new Scanner(System.in);
 
-    public static HouseFurama getHouse() throws IOException {
+    public static HouseFurama getHouse(){
         String nameService;
         while (true) {
             try {
@@ -26,43 +23,87 @@ public class HouseService {
             }
         }
 
-        System.out.println("Enter usable Area of Facility");
-        double usableArea = Double.parseDouble(scan.nextLine());
-        CheckInputToData.checkInputToDouble(usableArea);
+        double usableArea;
+        do {
+            System.out.println("Enter usable Area of House");
+            try {
+                usableArea = Double.parseDouble(scan.nextLine());
+                if (usableArea < 30) {
+                    throw new CheckException("Usable Area must be >30");
+                }
+                break;
+            } catch (CheckException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Usable Area must be a number");
+            }
+        } while (true);
 
-        System.out.println("Enter rental Cost of Facility");
-        double rentalCost = Double.parseDouble(scan.nextLine());
-        CheckInputToData.checkInputToDouble(rentalCost);
+        double rentalCost;
+        do {
+            System.out.println("Enter rental Cost of House");
+            try {
+                rentalCost = Double.parseDouble(scan.nextLine());
+                if (rentalCost < 0) {
+                    throw new CheckException("Rental Cost must be >0");
+                }
+                break;
+            } catch (CheckException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Rental Cost must be a number");
+            }
+        } while (true);
 
-        System.out.println("Enter max number of people of Facility");
-        int maxNumberOfPeople = Integer.parseInt(scan.nextLine());
-        CheckInputToData.checkInputToInteger(maxNumberOfPeople);
+        int maxNumberOfPeople;
+        do {
+            System.out.println("Enter max number of people of House");
+            try {
+                maxNumberOfPeople = Integer.parseInt(scan.nextLine());
+                if (maxNumberOfPeople < 0 || maxNumberOfPeople >20) {
+                    throw new CheckException("Max number of people must be >0 and <20");
+                }
+                break;
+            } catch (CheckException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Max number of people must be a number");
+            }
+        } while (true);
 
-        System.out.print("Enter rental Type of Facility: " +
+        System.out.print("Enter rental Type of House: " +
                 "\n 1. Rent by year" +
                 "\n 2. Rent by month" +
                 "\n 3. Rent by day" +
                 "\n 4. Rent by hours");
         System.out.println("Enter choose to menu");
-        String rentalType = scan.nextLine();
+        String rentalType = "";
         do {
-            boolean check;
-            System.out.println("Input rental type of villa");
+            boolean check = false;
+            System.out.println("Input rental type of house");
             int choose = Integer.parseInt(scan.nextLine());
             switch (choose) {
                 case 1:
+                    rentalType = "Rent by year";
+                    check = true;
+                    break;
                 case 2:
+                    rentalType = "Rent by month";
+                    check = true;
+                    break;
                 case 3:
+                    rentalType = "Rent by day";
+                    check = true;
+                    break;
                 case 4:
-                    CheckInputToData.checkInputToString(rentalType);
+                    rentalType = "Rent by hours";
                     check = true;
                     break;
                 default:
                     System.out.println("Your selection is not suitable, selections from 1 to 4");
-                    check = true;
                     break;
             }
-            if (check) {
+            if (!check) {
                 break;
             }
         } while (true);
@@ -100,10 +141,21 @@ public class HouseService {
             }
         }
 
-        System.out.println("Enter number of floors of Villa");
-        int numberOfFloors = Integer.parseInt(scan.nextLine());
-        CheckInputToData.checkInputToInteger(numberOfFloors);
-
+        int numberOfFloors;
+        do {
+            System.out.println("Enter number of floors of House");
+            try {
+                numberOfFloors = Integer.parseInt(scan.nextLine());
+                if (numberOfFloors < 0) {
+                    throw new CheckException("Number of floors must be >0");
+                }
+                break;
+            } catch (CheckException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Number of floors must be a number");
+            }
+        } while (true);
         return new HouseFurama(nameService, usableArea, rentalCost, maxNumberOfPeople, rentalType, roomStandard, numberOfFloors);
     }
 }

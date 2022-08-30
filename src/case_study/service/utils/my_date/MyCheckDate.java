@@ -7,9 +7,6 @@ import java.util.Scanner;
 
 public class MyCheckDate {
     private static final Scanner scan = new Scanner(System.in);
-
-
-
     public static MyDate getDateInfo(int minAge, int maxAge) {
         MyDate date;
         while (true)

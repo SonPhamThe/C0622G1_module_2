@@ -1,12 +1,10 @@
 package case_study.service.impl;
 
-import case_study.model.employee.Employee;
 import case_study.model.furama_resort.Facility;
 import case_study.model.furama_resort.HouseFurama;
 import case_study.model.furama_resort.RoomFurama;
 import case_study.model.furama_resort.VillaFurama;
 import case_study.service.IFacility;
-import case_study.service.exception.CheckException;
 import case_study.service.utils.readfile.ReadFileHouse;
 import case_study.service.utils.readfile.ReadFileRoom;
 import case_study.service.utils.readfile.ReadFileVilla;
@@ -26,13 +24,8 @@ public class FacilityService implements IFacility {
 
     private static final String PATH_ROOM = "src/case_study/data/room.csv";
 
-    private static List<VillaFurama> villas = new ArrayList<>();
-
-    private static List<RoomFurama> rooms = new ArrayList<>();
-
-    private static List<HouseFurama> houses = new ArrayList<>();
-
-    private static final Map<Facility, Integer> facility = new LinkedHashMap<>();
+    public static final Map<Facility, Integer> facilities = new LinkedHashMap<>();
+    private static final Map<Facility, Integer> facilityMaintenance = new LinkedHashMap<>();
 
     @Override
     public void addFacility() throws IOException {
@@ -46,29 +39,29 @@ public class FacilityService implements IFacility {
             boolean check = false;
             switch (choose) {
                 case 1:
-                    villas = ReadFileVilla.readVillaFile(PATH_VILLA);
+                    List<VillaFurama> villas = ReadFileVilla.readVillaFile(PATH_VILLA);
                     VillaFurama villa = VillaService.getVilla();
                     villas.add(villa);
                     check = true;
-                    facility.put(villa, 0);
+                    facilities.put(villa, 0);
                     System.out.println("Success add");
                     WriteFileVilla.writeVillaFile(PATH_VILLA, villas);
                     break;
                 case 2:
-                    houses = ReadFileHouse.readHouseFile(PATH_HOUSE);
+                    List<HouseFurama> houses = ReadFileHouse.readHouseFile(PATH_HOUSE);
                     HouseFurama house = HouseService.getHouse();
                     houses.add(house);
                     System.out.println("Success add");
-                    facility.put(house, 0);
+                    facilities.put(house, 0);
                     check = true;
                     WriteFileHouse.writeHouseFile(PATH_HOUSE, houses);
                     break;
                 case 3:
-                    rooms = ReadFileRoom.readRoomFile(PATH_ROOM);
+                    List<RoomFurama> rooms = ReadFileRoom.readRoomFile(PATH_ROOM);
                     RoomFurama room = RoomService.getRoom();
                     rooms.add(room);
                     System.out.println("Success add");
-                    facility.put(room, 0);
+                    facilities.put(room, 0);
                     check = true;
                     WriteFileRoom.writeRoomFile(PATH_ROOM, rooms);
                     break;
@@ -87,54 +80,31 @@ public class FacilityService implements IFacility {
 
     @Override
     public void displayFacility() {
-        while (true) {
-            System.out.println("Please choice to display" +
-                    "\n 1. Display New Villa" +
-                    "\n 2. Display New House" +
-                    "\n 3. Display New Room" +
-                    "\n 4. Back to menu");
-            int choose = Integer.parseInt(scan.nextLine());
-            boolean check = false;
-            switch (choose) {
-                case 1:
-                    if (villas.size() == 0) {
-                        System.out.println("List the villa is empty");
-                    }
-                    for (VillaFurama villa : villas) {
-                        System.out.println(villa.toString());
-                    }
-                    check = true;
-                    break;
-                case 2:
-                    if (houses.size() == 0) {
-                        System.out.println("List the house is empty");
-                    }
-                    for (HouseFurama house : houses) {
-                        System.out.println(house.toString());
-                    }
-                    check = true;
-                    break;
-                case 3:
-                    if (rooms.size() == 0) {
-                        System.out.println("List the room is empty");
-                    }
-                    for (RoomFurama room : rooms) {
-                        System.out.println(room.toString());
-                    }
-                    check = true;
-                    break;
-                case 4:
-                    displayFacility();
-                    break;
-                default:
-                    System.out.println("Your selection is not suitable, selections from 1 to 4");
-                    check = true;
-                    break;
-            }
-            if (check) {
-                break;
-            }
+        Set<Facility> facilitySet = facilities.keySet();
+        for (Facility facility : facilitySet) {
+            System.out.println(facility.toString() + "," + facilities.get(facility));
         }
     }
 
+    @Override
+    public void displayFacilityMaintenance() {
+        for (Facility facility : facilities.keySet()) {
+            if (facilities.get(facility) >= 5) {
+                facilityMaintenance.put(facility, facilities.get(facility));
+            }
+        }
+        for (Facility facility : facilityMaintenance.keySet()) {
+            System.out.println(facility + "has been used: " + facilityMaintenance.get(facility) + "times");
+        }
+    }
+
+    public Facility findFacilityId(String id) {
+        Set<Facility> facilitySet = facilities.keySet();
+        for (Facility facility : facilitySet) {
+            if (facility.getNameService().contains(id)) {
+                return facility;
+            }
+        }
+        return null;
+    }
 }

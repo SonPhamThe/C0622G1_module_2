@@ -8,10 +8,8 @@ public class MyDate implements Comparable<MyDate> {
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     private String strDate;
     private Date date = new Date();
-
     public MyDate() {
     }
-
     public MyDate(String strDate) throws ParseException {
         formatter.setLenient(false);
         this.strDate = strDate;

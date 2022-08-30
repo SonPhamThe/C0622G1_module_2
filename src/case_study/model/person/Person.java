@@ -4,7 +4,7 @@ public abstract class Person {
     private String name;
     private String dayOfBirth;
     private String gender;
-    private String CMND;
+    private String idCard;
     private String numberOfPhone;
     private String email;
 
@@ -36,12 +36,12 @@ public abstract class Person {
         this.gender = gender;
     }
 
-    public String getCMND() {
-        return CMND;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setCMND(String CMND) {
-        this.CMND = CMND;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public String getNumberOfPhone() {
@@ -61,18 +61,18 @@ public abstract class Person {
     }
 
 
-    public Person(String nameEmployee, String dayOfBirth, String gender, String CMND, String numberOfPhone, String email) {
+    public Person(String nameEmployee, String dayOfBirth, String gender, String idCard, String numberOfPhone, String email) {
         this.name = nameEmployee;
         this.dayOfBirth = dayOfBirth;
         this.gender = gender;
-        this.CMND = CMND;
+        this.idCard = idCard;
         this.numberOfPhone = numberOfPhone;
         this.email = email;
     }
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s", name, dayOfBirth, gender, CMND, numberOfPhone, email);
+        return String.format("%s,%s,%s,%s,%s,%s", name, dayOfBirth, gender, idCard, numberOfPhone, email);
 //        return " and has " +
 //                "nameEmployee = " + name+
 //                ", dayOfBirth = " + dayOfBirth+
